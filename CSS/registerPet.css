@@ -1,0 +1,43 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body{
+    background-color: #bbb8dd;
+}
+
+.container{
+    width: 50%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.form-control{
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #bbb8dd;
+}
+
+.btn-primary{
+    border-radius: 0;
+    background-color: #6766dc;
+    align-self: center;
+}
+
+@media only screen and (max-width: 768px){
+    .container{
+        width: 90%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        padding-bottom: 40px;
+    }
+}
