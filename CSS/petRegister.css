@@ -20,24 +20,32 @@ body{
     transform: translate(-50%, -50%);
 }
 
+
 .form-control{
     border-radius: 0;
     border: none;
     border-bottom: 1px solid #bbb8dd;
 }
 
-.btn-primary{
+.form-selector{
     border-radius: 0;
-    background-color: #6766dc;
-    align-self: center;
+    border: none;
+    border-bottom: 1px solid #bbb8dd;
 }
 
-@media only screen and (max-width: 768px){
+.btnCreate{
+    border-radius: 6px;
+    background-color: #6766dc;
+    border: none;
+    color: white;
+}
+
+@media only screen and (max-width: 600px){
     .container{
         width: 90%;
         position: absolute;
         left: 50%;
-        top: 50%;
+        top: 40%;
         padding-bottom: 40px;
     }
 }
