@@ -3,14 +3,14 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     const passwordInput = this.querySelector('input[type="password"]');
 
     if (!emailInput.checkValidity()) {
-        alert('Por favor, introduce un correo electrónico válido.');
+        alert('Please enter a valid email.');
         emailInput.focus();
         event.preventDefault();
         return;
     }
 
     if (passwordInput.value.trim() === '') {
-        alert('La contraseña no puede estar vacía.');
+        alert('Password cant be empty.');
         passwordInput.focus();
         event.preventDefault();
     }
