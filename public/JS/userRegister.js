@@ -1,6 +1,6 @@
 // app.js
 
-document.getElementById('userRegister').addEventListener('submit', function(event) {
+document.getElementById('userRegister').addEventListener('submit', async function(event) {
     event.preventDefault(); // Evita el envío del formulario por defecto
 
     const names = document.getElementById('names').value;
@@ -11,7 +11,7 @@ document.getElementById('userRegister').addEventListener('submit', function(even
     const user = document.getElementById('user').value;
     const password = document.getElementById('password').value;
 
-    fetch('http://localhost:3000/register', {
+    await fetch('/user/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
