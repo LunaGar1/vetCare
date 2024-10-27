@@ -10,8 +10,8 @@ async function login(req, res){
         if (user2) {
 
             if (user2.password === password) {
+                
                 res.send(user2);
-                res.send('Usuario encontrado: ' + user2.names);
             } 
             else {
                 return res.send({ msg: "Contraseña incorrecta." });

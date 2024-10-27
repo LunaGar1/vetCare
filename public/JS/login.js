@@ -11,7 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         event.preventDefault();
     }
 
-    await fetch('/login', {
+    await fetch('/login/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -29,6 +29,16 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     })
     .then(data => {
         console.log('Usuario logueado: ', data);
+        console.log(data.Role)
+        if (data.Role === 'Admin'){
+            window.location.href = 'http://localhost:3000/HTML/landingAdmin.html'
+            
+        } else if (data.Role === 'Vet'){
+            window.location.href = 'http://localhost:3000/HTML/landingVet.html'
+
+        } else if (data.Role === 'Pet owner'){
+            window.location.href = 'http://localhost:3000/HTML/landingOwner.html'
+        }
         // Aquí puedes redirigir al usuario o mostrar un mensaje de éxito
     })
     .catch(error => {
