@@ -1,7 +1,9 @@
-// app.js
+const p=document.getElementById("warnings");
+const s=document.getElementById("valid")
 
 document.getElementById('userRegister').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Evita el envío del formulario por defecto
+    
+    event.preventDefault(); 
 
     const names = document.getElementById('names').value;
     const lastNames = document.getElementById('lastNames').value;
@@ -11,33 +13,87 @@ document.getElementById('userRegister').addEventListener('submit', async functio
     const user = document.getElementById('user').value;
     const password = document.getElementById('password').value;
 
+    let warnings = ""
+    let send=false
+    p.innerHTML = ""
+
+    if(!names || !lastNames || !typeID || !ID || !Role || !user || !password ){
+        warnings+='All fields are required <br>';
+        send=true
+    }else{
+    
+        if(names.length < 3 || names.length > 20){
+            warnings+='The name must contain between 3 and 20 characters <br>';
+            send=true
+        }
+        if(lastNames.length < 3 || lastNames.length > 20){
+            warnings+='The last names must contain between 3 and 20 characters <br>';
+            send=true
+        }
+    
+        const regexID = /^\d+$/;
+    
+        if (!regexID.test(ID) || ID.length < 8 || ID.length > 12) {
+            warnings+='The ID must be only numbers and contain between 8 and 12 digits <br>';
+            send=true
+        }
+        
+        let regexUsername = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    
+        if (!regexUsername.test(user)) {
+            warnings+='The username must be an email address <br>';
+            send=true
+        }
+    
+        if(password.length < 8 || password.length > 15){
+            warnings+='The password must contain between 8 and 15 characters <br>';
+            send=true
+        }
+    
+    
+    }
+
+    if(send){
+        p.innerHTML =warnings
+        return;
+    }
+
     await fetch('/user/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            names:names,
-            lastNames: lastNames,
-            typeID: typeID,
-            ID: ID,
-            Role: Role,
-            user: user,
-            password: password
+            names,
+            lastNames,
+            typeID,
+            ID,
+            Role,
+            user,
+            password
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error en la solicitud');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log('Usuario guardado:', data);
-        // Aquí puedes redirigir al usuario o mostrar un mensaje de éxito
+        if (!data.error) {
+            s.innerHTML = data.message;
+
+            setTimeout(() => {
+                s.innerHTML = ""; 
+                p.innerHTML = ""; 
+            }, 3000);
+            document.getElementById('userRegister').reset();
+        } else {
+            p.innerHTML = data.error; 
+        }
     })
     .catch(error => {
         console.error('Error:', error);
-        // Aquí puedes mostrar un mensaje de error al usuario
+        p.innerHTML = 'Error processing your request. Please try again.';
     });
+
+});
+
+document.getElementById('cancelButton').addEventListener('click', function() {
+    document.getElementById('userRegister').reset(); // Restablece todos los campos del formulario
 });

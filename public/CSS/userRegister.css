@@ -16,7 +16,7 @@ body {
     border-radius: 5px;
     position: absolute;
     left: 50%;
-    top: 40%;
+    top: 50%;
     transform: translate(-50%, -50%);
     overflow: auto; 
 }
@@ -38,6 +38,11 @@ body {
     background-color: #6766dc;
     border: none;
     color: white;
+}
+
+.required-asterisk {
+    color: red;
+    margin-left: 2px;
 }
 
 @media only screen and (max-width: 600px) {

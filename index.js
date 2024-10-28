@@ -7,16 +7,13 @@ const cors = require('cors');
 
 const app = express();
 
-// Conectar a la base de datos
 connectDB();
 
 app.use(cors());
 
-// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Servir archivos estáticos (incluyendo userRegister.html)
 app.use(express.static('public'));
 
 //******* ROUTERS******* */
@@ -32,4 +29,4 @@ app.use('/login', login);
 
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
