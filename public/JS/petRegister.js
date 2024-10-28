@@ -1,11 +1,41 @@
 document.getElementById('petRegister').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Evita el envío del formulario por defecto
+    event.preventDefault(); 
 
     const name = document.getElementById('name').value;
     const date = document.getElementById('date').value;
     const sex = document.getElementById('sex').value;
     const breed = document.getElementById('breed').value;
     const type = document.getElementById('type').value;
+
+    let warnings  = ""
+    let send = false
+    p.innerHTML = ""
+
+    if (!name || !date || !sex || !breed || !type){
+        warnings+= 'All fields are required <br>';
+        send = true
+    }
+    else{
+        if(name.length < 3 || name.length > 20){
+            warnings+= 'The name must contain between 3 and 20 characters <br>';
+            send = true
+        }
+
+        if(breed.length < 3 || breed.length > 20){
+            warnings+= 'The breed must contain between 3 and 20 characters <br>';
+            send = true
+        }
+
+        if(type.length < 2 || type.length > 10){
+            warnings+= 'The type must contain between 3 and 20 characters <br>';
+            send = true
+        }
+    }
+
+    if(send){
+        p.innerHTML = warnings
+        return;
+    }
 
 
     console.log(name, date, sex, breed, type)
@@ -22,18 +52,27 @@ document.getElementById('petRegister').addEventListener('submit', async function
             breed: breed 
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log('Pet saved:', data);
-        // Aquí puedes redirigir al usuario o mostrar un mensaje de éxito
+        if(!data.error){
+            s.innerHTML = data.message;
+
+            setTimeout(() => {
+                s.innerHTML = "";
+                p.innerHTML = "";
+            }, 3000);
+            document.getElementById('petRegister').reset();
+        }
+        else{
+            p.innerHTML = data.error;
+        } 
     })
     .catch(error => {
-        console.error('Error:', error);
-        // Aquí puedes mostrar un mensaje de error al usuario
+        console.error('Error', error);
+        p.innerHTML = 'Error procesing your request. Pleasy try again.';
     });
+});
+
+document.getElementById('cancelButton').addEventListener('click', function(){
+    document.getElementById('petRegister').reset();
 });
