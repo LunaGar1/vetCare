@@ -16,15 +16,15 @@
     <div class="container align-items-center">
         <form id="petRegister" method="POST" class="row g-3" >
             <div class="col-md-6">
-              <label for="name" class="form-label">Name of the pet*</label>
+              <label for="name" class="form-label">Name of the pet <span class="required-asterisk">*</span></label>
               <input type="text" class="form-control" id="name"> 
             </div>
             <div class="col-md-6">
-              <label for="date" class="form-label">Date of birth*</label>
+              <label for="date" class="form-label">Date of birth <span class="required-asterisk">*</span></label>
               <input type="date" class="form-control" id="date">
             </div>
             <div class="col-md-6">
-              <label for="sex" class="form-label">Sex*</label>
+              <label for="sex" class="form-label">Sex <span class="required-asterisk">*</span></label>
               <select id="sex" class="form-select">
                 <option selected>Choose...</option>
                 <option value="male">Male</option>
@@ -32,13 +32,15 @@
               </select>
             </div>
             <div class="col-md-6">
-              <label for="type" class="form-label">Type*</label>
+              <label for="type" class="form-label">Type <span class="required-asterisk">*</span></label>
               <input type="text" class="form-control" id="type">
             </div>
             <div class="col-12">
-              <label for="breed" class="form-label">Breed*</label>
+              <label for="breed" class="form-label">Breed <span class="required-asterisk">*</span></label>
               <input type="text" class="form-control" id="breed">
             </div>
+            <div class="error-message text-danger text-center" id="warnings"></div>
+              <div id="valid" class=" text-success text-center"></div>
             <div class="col-md-6" style="display: flex; justify-content: right; ">
               <button type="submit" class="btn btn-secondary btnCreate">Create</button>
             </div>
