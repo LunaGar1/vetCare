@@ -13,45 +13,49 @@
             <h1>Create a new user!</h1>
         </div>
     </div>
-    <div class="container  mt-4 align-items-center">
+    <div class="container align-items-center">
         <form id="userRegister" method="POST" class="row g-3">
             <div class="col-md-6">
-              <label class="form-label">Names:</label>
+              <label class="form-label">Names: <span class="required-asterisk">*</span></label>
               <input type="text" class="form-control" id="names"  name="names">
+              <div class="invalid-feedback">Complete los datos</div>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Last names:</label>
+              <label class="form-label">Last names: <span class="required-asterisk">*</span></label>
               <input type="text" class="form-control" id="lastNames" name="lastNames">
+              <span id="namesError" class="error-message text-danger"></span>
             </div>
             <div class="col-md-6">
-                <labe class="form-label">Type ID:</label>
+                <label class="form-label">Type ID: <span class="required-asterisk">*</span></label>
                 <select id="typeID" name="typeID" class="form-select">
-                  <option selected>Choose...</option>
+                  <option selected disabled value="">Choose...</option>
                   <option value="Foreign ID">Foreign ID</option>
                   <option value="ID">ID</option>
                 </select>
               </div>
             <div class="col-md-6">
-              <label class="form-label">ID:</label>
+              <label class="form-label">ID: <span class="required-asterisk">*</span></label>
               <input type="text" class="form-control" id="ID" name="ID">
             </div>
             <div class="col-md-6">
-                <labe class="form-label">Role:</label>
+                <labe class="form-label">Role: <span class="required-asterisk">*</span></label>
                 <select id="Role" name="Role" class="form-select">
-                  <option selected>Choose...</option>
+                  <option selected disabled value="">Choose...</option>
                   <option value="Vet">Veterinary</option>
                   <option value="Pet owner">Pet owner</option>
                   <option value="Admin">Admin</option>
                 </select>
               </div>
             <div class="col-md-6">
-              <label class="form-label">User:</label>
+              <label class="form-label">Username (email): <span class="required-asterisk">*</span></label>
               <input type="text" class="form-control" id="user" name="user">
             </div>
             <div class="col-md-6">
-                <label class="form-label">Password:</label>
-                <input type="text" class="form-control" id="password" name="password">
+                <label class="form-label">Password: <span class="required-asterisk">*</span></label>
+                <input type="text" class="form-control" id="password" name="password" >
               </div>
+              <div class="error-message text-danger text-center" id="warnings"></div>
+              <div id="valid" class=" text-success text-center"></div>
               <div class="d-flex mt-4">
                 <div class="col-md-6" style="display: flex; justify-content: right; ">
                   <button type="submit" class="btn btn-secondary btnCreate">Create</button>
