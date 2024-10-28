@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const connectDB = require('./db');
 const User = require('./models/userModel');
+const Pet = require('./models/petModel');
 const cors = require('cors');
 
 const app = express();
@@ -23,8 +24,8 @@ app.use(express.static('public'));
 var user = require('./routers/user');
 app.use('/user', user)
 
-// var pet = require('./routers/pet');
-// app.use('/pet')
+var pet = require('./routers/pet');
+app.use('/pet', pet)
 
 var login = require('./routers/login');
 app.use('/login', login);
