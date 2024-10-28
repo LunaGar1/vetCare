@@ -39,10 +39,9 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         } else if (data.Role === 'Pet owner'){
             window.location.href = 'http://localhost:3000/HTML/landingOwner.html'
         }
-        // Aquí puedes redirigir al usuario o mostrar un mensaje de éxito
+
     })
     .catch(error => {
         console.error('Error:', error);
-        // Aquí puedes mostrar un mensaje de error al usuario
     });
 });

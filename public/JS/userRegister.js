@@ -77,7 +77,7 @@ document.getElementById('userRegister').addEventListener('submit', async functio
     .then(data => {
         if (!data.error) {
             s.innerHTML = data.message;
-            
+
             setTimeout(() => {
                 s.innerHTML = ""; 
                 p.innerHTML = ""; 
@@ -92,4 +92,8 @@ document.getElementById('userRegister').addEventListener('submit', async functio
         p.innerHTML = 'Error processing your request. Please try again.';
     });
 
+});
+
+document.getElementById('cancelButton').addEventListener('click', function() {
+    document.getElementById('userRegister').reset(); // Restablece todos los campos del formulario
 });
