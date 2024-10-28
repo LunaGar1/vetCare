@@ -1,4 +1,8 @@
+const p=document.getElementById("warnings");
+const s=document.getElementById("valid");
+
 document.getElementById('petRegister').addEventListener('submit', async function(event) {
+
     event.preventDefault(); 
 
     const name = document.getElementById('name').value;
@@ -37,8 +41,6 @@ document.getElementById('petRegister').addEventListener('submit', async function
         return;
     }
 
-
-    console.log(name, date, sex, breed, type)
     await fetch('/pet/register', {
         method: 'POST',
         headers: {
