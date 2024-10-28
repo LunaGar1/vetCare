@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
+const petSchema = new mongoose.Schema({
   name: String,
-  typeID: String,
   date: Date,
-  age: int,
-  sex: int,
-  password: String
-
+  sex: String,
+  type: String,
+  breed: String,
+  // ownerID: String
 });
 
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Pet', petSchema);
