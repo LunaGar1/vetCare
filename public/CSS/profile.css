@@ -1,0 +1,35 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+
+body {
+    background-color: #bbb8dd;
+}
+
+.container {
+    width: 40%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: auto; 
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 90%;
+        position: static;
+        margin: 20px auto;
+        top: auto; 
+        left: auto; 
+        transform: none;
+        padding-bottom: 20px; 
+    }
+}

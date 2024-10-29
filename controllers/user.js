@@ -22,8 +22,27 @@ async function register(req, res){
     console.error('Error registering the user', error);
   }
 
-}
+};
+
+
+
+const renderProfile = async (req, res) => {
+  if (!req.session.userId) {
+      return res.redirect('../HTML/login.html');
+  }
+
+  try {
+      const user = await userModel.findById(req.session.userId);
+      if (!user) {
+          return res.status(404).send('Usuario no encontrado');
+      }
+      res.render('profile', { user });
+  } catch (err) {
+      res.status(500).send('Error al buscar el usuario');
+  }
+};
 
 module.exports = {
-    register
-}
+    register,
+    renderProfile,
+};

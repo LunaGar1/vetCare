@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const connectDB = require('./db');
 const User = require('./models/userModel');
 const cors = require('cors');
+const session = require('express-session');
+const path = require('path');
+
 
 const app = express();
 
@@ -16,9 +19,21 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 //******* ROUTERS******* */
+app.use(session({
+    secret: 'my_safe_chain',
+    resave: false,
+    saveUninitialized: true,
+}));
 
 var user = require('./routers/user');
 app.use('/user', user)
+
+
+
+// Configuración de EJS
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 
 // var pet = require('./routers/pet');
 // app.use('/pet')

@@ -95,5 +95,5 @@ document.getElementById('userRegister').addEventListener('submit', async functio
 });
 
 document.getElementById('cancelButton').addEventListener('click', function() {
-    document.getElementById('userRegister').reset(); // Restablece todos los campos del formulario
+    document.getElementById('userRegister').reset();
 });

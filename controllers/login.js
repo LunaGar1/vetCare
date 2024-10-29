@@ -11,6 +11,7 @@ async function login(req, res){
 
             if (user2.password === password) {
                 
+                req.session.userId = user2._id;
                 res.send(user2);
             } 
             else {

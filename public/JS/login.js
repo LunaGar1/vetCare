@@ -29,6 +29,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     })
     .then(data => {
         console.log('Usuario logueado: ', data);
+       
         console.log(data.Role)
         if (data.Role === 'Admin'){
             window.location.href = 'http://localhost:3000/HTML/landingAdmin.html'
