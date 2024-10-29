@@ -75,6 +75,6 @@ document.getElementById('petRegister').addEventListener('submit', async function
     });
 });
 
-document.getElementById('cancelButton').addEventListener('click', function(){
-    document.getElementById('petRegister').reset();
+document.getElementById('cancelButton').addEventListener('click', function() {
+    window.location.href = '../HTML/landingOwner.html';
 });
