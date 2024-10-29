@@ -12,17 +12,17 @@ async function login(req, res){
             if (user2.password === password) {
                 
                 req.session.userId = user2._id;
-                res.send(user2);
+                return res.json(user2);
             } 
             else {
-                return res.status(400).json({ error: 'Incorrect username or password' });
+                return res.status(401).json({ error: 'Incorrect username or password' });
                 //return res.send({ msg: "Contraseña incorrecta." });
             }
         } else {
-            res.send('Usuario no encontrado')
+            return res.status(404).json({ error: 'User not found' }); // Respuesta para usuario no encontrado
         }
     } catch (error) {
-        res.send({"msg": "Error mongo"});
+        return res.status(500).json({ error: 'BD error' });
     }
 
 }
