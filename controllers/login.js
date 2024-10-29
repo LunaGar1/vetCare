@@ -15,7 +15,8 @@ async function login(req, res){
                 res.send(user2);
             } 
             else {
-                return res.send({ msg: "Contraseña incorrecta." });
+                return res.status(400).json({ error: 'Incorrect username or password' });
+                //return res.send({ msg: "Contraseña incorrecta." });
             }
         } else {
             res.send('Usuario no encontrado')
