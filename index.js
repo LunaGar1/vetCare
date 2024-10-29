@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const connectDB = require('./db');
 const User = require('./models/userModel');
+const Pet = require('./models/petModel');
 const cors = require('cors');
 const session = require('express-session');
 const path = require('path');
@@ -35,8 +36,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
-// var pet = require('./routers/pet');
-// app.use('/pet')
+var pet = require('./routers/pet');
+app.use('/pet', pet)
 
 var login = require('./routers/login');
 app.use('/login', login);

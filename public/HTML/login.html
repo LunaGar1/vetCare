@@ -24,14 +24,16 @@
                     </div>
                     <form id="loginForm">
                         <div class="input-group mb-3">
-                            <input type="email" class="form-control form-control-lg bg-ligth fs-6" placeholder="Email address" required>
+                            <input id="email"  type="text" class="form-control form-control-lg bg-ligth fs-6" placeholder="Email address">
                         </div>
                         <div class="input-group mb-1">
-                            <input type="password" class="form-control form-control-lg bg-ligth fs-6" placeholder="Password" required>
+                            <input type="password" class="form-control form-control-lg bg-ligth fs-6" placeholder="Password">
                         </div>
                         <div class="input-group mb-3">
-                            <button class="btn btn-lg btn-primary w-100 fs-6" style="background-color: #6766dc; color: white;">Login</button>
+                            <button type="submit" class="btn btn-lg btn-primary w-100 fs-6" style="background-color: #6766dc; color: white;">Login</button>
                         </div>
+                        <div class="error-message text-danger text-center" id="warnings"></div>
+                        <div id="valid" class=" text-success text-center"></div>
                     </form>
                 </div>
             </div>

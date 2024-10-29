@@ -40,6 +40,11 @@ body {
     color: white;
 }
 
+.required-asterisk{
+    color: red;
+    margin-left: 2px;
+}
+
 @media only screen and (max-width: 600px) {
     .container {
         width: 90%;
