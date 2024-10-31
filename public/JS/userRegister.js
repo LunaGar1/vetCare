@@ -1,5 +1,6 @@
 const p=document.getElementById("warnings");
-const s=document.getElementById("valid")
+const s=document.getElementById("valid");
+
 
 document.getElementById('userRegister').addEventListener('submit', async function(event) {
     
@@ -45,8 +46,8 @@ document.getElementById('userRegister').addEventListener('submit', async functio
             send=true
         }
     
-        if(password.length < 8 || password.length > 15){
-            warnings+='The password must contain between 8 and 15 characters <br>';
+        if(password.length < 12){
+            warnings+='The password must contain 12 characters <br>';
             send=true
         }
     
