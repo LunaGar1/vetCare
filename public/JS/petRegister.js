@@ -70,6 +70,26 @@ document.getElementById('petRegister').addEventListener('submit', async function
     });
 });
 
+// document.addEventListener('DOMContentLoaded', async () => {
+//     try {
+//         const response = await fetch('/pet/getAllPets'); 
+//         const pets = await response.json();
+
+//         const tableBody = document.querySelector('.tabla-primary tbody'); 
+
+//         pets.forEach(pet => {
+//             const row = document.createElement('tr');
+//             row.innerHTML = `
+//                 <td>${pet.name}</td>
+//                 <td>${pet.age}</td>
+//             `;
+//             tableBody.appendChild(row);
+//         });
+//     } catch (error) {
+//         console.error('Error al cargar las mascotas:', error);
+//     }
+// });
+
 document.getElementById('cancelButton').addEventListener('click', function() {
     window.location.href = '../HTML/landingOwner.html';
 });

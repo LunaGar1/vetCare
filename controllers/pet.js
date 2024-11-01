@@ -13,6 +13,16 @@ async function register(req, res){
 
 }
 
+// async function getAllPets(req, res) {
+//   try {
+//       const pets = await Pet.find(); 
+//       res.json(pets);
+//   } 
+//   catch (error) {
+//       res.status(500).json({ message: 'Error al obtener las mascotas' });
+//   }
+// }
+
 module.exports = {
     register
 }
