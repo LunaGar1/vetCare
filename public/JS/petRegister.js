@@ -29,11 +29,6 @@ document.getElementById('petRegister').addEventListener('submit', async function
             warnings+= 'The breed must contain between 3 and 20 characters <br>';
             send = true
         }
-
-        if(type.length < 2 || type.length > 10){
-            warnings+= 'The type must contain between 3 and 20 characters <br>';
-            send = true
-        }
     }
 
     if(send){
