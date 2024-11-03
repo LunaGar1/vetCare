@@ -7,4 +7,6 @@ router.post('/register', Controller.register);
 
 router.get('/profile', Controller.renderProfile);
 
+router.get('/showUsers', Controller.showUsers);
+
 module.exports = router;

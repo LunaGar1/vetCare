@@ -36,15 +36,26 @@ const renderProfile = async (req, res) => {
   try {
       const user = await userModel.findById(req.session.userId);
       if (!user) {
-          return res.status(404).send('Usuario no encontrado');
+          return res.status(404).send('User no found');
       }
       res.render('profile', { user });
   } catch (err) {
-      res.status(500).send('Error al buscar el usuario');
+      res.status(500).send('Error searching for user');
+  }
+};
+
+const showUsers = async (req, res) => {
+  try {
+      const users = await userModel.find({});
+      console.log(users);
+      return res.render('showUsers', {users: users})
+  } catch (error) {
+      return res.status(500).send('Error showing users');
   }
 };
 
 module.exports = {
     register,
     renderProfile,
+    showUsers,
 };

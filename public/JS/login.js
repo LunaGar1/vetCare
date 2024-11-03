@@ -49,6 +49,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     .then(data => {
         if (!data.error) {
             s.innerHTML = data.message;
+            sessionStorage.setItem('user', JSON.stringify(data));
             
             if (data.Role === 'Admin'){
                 window.location.href = 'http://localhost:3000/HTML/landingAdmin.html'
