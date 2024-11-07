@@ -144,8 +144,9 @@ document.getElementById('updateUserForm').addEventListener('submit', async funct
                 s.innerHTML = ""; 
                 p.innerHTML = ""; 
                 modalUsers.hide();
+                location.reload();
             }, 3000);
-
+            
         } else {
             p.innerHTML = data.error; 
         }
@@ -154,12 +155,30 @@ document.getElementById('updateUserForm').addEventListener('submit', async funct
         console.error('Error:', error);
         p.innerHTML = 'Error processing your request. Please try again.';
     });
+});
 
 
+document.querySelectorAll('.btnDelete').forEach(button => {
+    button.addEventListener('click', async function () {
+        const userId = this.getAttribute('data-id');
 
+        if (confirm('Are you sure you want to delete this user?')) {
+            try {
+                const response = await fetch(`/user/deleteUser/${userId}`, {
+                    method: 'DELETE'
+                });
 
-
-
-
-
+                const data = await response.json();
+                if (!data.error) {
+                    alert('User deleted successfully');
+                    location.reload(); // Recarga la página para actualizar la lista de usuarios
+                } else {
+                    alert(data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting user. Please try again.');
+            }
+        }
+    });
 });

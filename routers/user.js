@@ -13,4 +13,10 @@ router.get('/getUser/:ID', Controller.getUserById);
 
 router.post('/editUser', Controller.editUser);
 
+router.delete("/deleteUser/:id", Controller.deleteUser);
+
+router.get("/getOneUser", Controller.getOneUser);
+
+router.post("/updatePassword", Controller.updatePassword);
+
 module.exports = router;

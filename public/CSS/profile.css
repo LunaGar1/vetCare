@@ -33,3 +33,8 @@ body {
         padding-bottom: 20px; 
     }
 }
+
+.required-asterisk {
+    color: red;
+    margin-left: 2px;
+}
