@@ -1,3 +1,19 @@
+document.getElementById('home').addEventListener('click', function() {
+    window.location.href = '../HTML/landingAdmin.html';
+});
+
+document.getElementById('profile').addEventListener('click', function() {
+    window.location.href = 'http://localhost:3000/user/profile';
+});
+
+document.getElementById('logout').addEventListener('click', function() {
+    sessionStorage.clear();
+    localStorage.clear();
+    window.location.href = '../HTML/login.html';
+});
+
+
+
 const p=document.getElementById("warnings");
 const s=document.getElementById("valid");
 

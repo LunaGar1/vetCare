@@ -21,13 +21,13 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link mx-lg"  href="#">Home</a>
+              <a class="nav-link mx-lg" id="home" href="#">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg" id="profile">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link mx-lg active" id="register" aria-current="page" href="#">Register</a>
+                <a class="nav-link mx-lg active" id="users" aria-current="page" href="#">Users</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link mx-lg" href="#">Schedule</a>
@@ -38,7 +38,7 @@
           </ul>
         </div>
       </div>
-      <a href="#" class="loginButton">Logout</a>
+      <a id="logout" class="loginButton">Logout</a>
       <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -90,17 +90,17 @@
             <div class="col-md-6">
                 <label class="form-label">Password: <span class="required-asterisk">*</span></label>
                 <input type="password" class="form-control" id="password" name="password" >
+            </div>
+            <div class="error-message text-danger text-center" id="warnings"></div>
+            <div id="valid" class=" text-success text-center"></div>
+            <div class="d-flex mt-4">
+              <div class="col-md-6" style="display: flex; justify-content: right; ">
+                <button type="submit" class="btn btn-secondary btnCreate">Create</button>
               </div>
-              <div class="error-message text-danger text-center" id="warnings"></div>
-              <div id="valid" class=" text-success text-center"></div>
-              <div class="d-flex mt-4">
-                <div class="col-md-6" style="display: flex; justify-content: right; ">
-                  <button type="submit" class="btn btn-secondary btnCreate">Create</button>
-                </div>
-                <div class="col-md-6" style="display: flex; justify-content: left;">
-                  <button type="button" class="btn btn-danger" id="cancelButton">Cancel</button>
-                </div>
+              <div class="col-md-6" style="display: flex; justify-content: left;">
+                <button type="button" class="btn btn-danger" id="cancelButton">Cancel</button>
               </div>
+            </div>
         </form>
     </div>
 
