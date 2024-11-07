@@ -9,4 +9,8 @@ router.get('/profile', Controller.renderProfile);
 
 router.get('/showUsers', Controller.showUsers);
 
+router.get('/getUser/:ID', Controller.getUserById);
+
+router.post('/editUser', Controller.editUser);
+
 module.exports = router;
