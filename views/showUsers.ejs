@@ -9,6 +9,51 @@
     <link rel="stylesheet" href=" ../CSS/showUsers.css">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand me-auto" href="#">VetCare</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">VetCare</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link mx-lg" id="home" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mx-lg" id="profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-lg active" aria-current="page" id="Users" href="#">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-lg" href="#">Schedule</a>
+                </li>
+                <li class="nav-item">
+                   <a class="nav-link mx-lg" href="#">About</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <a id="logout" class="loginButton" >Logout</a>
+          <button  class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+    </nav>
+
+    <div class=" headline mt-4">
+        <h1 col-md-6>Users</h1>
+        <div class="text-end ">
+            <button type="button" class="btn btn-primary" id="btnNewUser">New user</button>
+        </div>
+    </div>
+
     <div>
         <table id="tableUsers" class="table mt-4">
             <thead>
@@ -16,6 +61,7 @@
                     <th>ID:</th>
                     <th>Names:</th>
                     <th>Last Names:</th>
+                    <th>Role:</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -25,9 +71,10 @@
                         <td><%= user.ID %></td>
                         <td><%= user.names %></td>
                         <td><%= user.lastNames %></td>
+                        <td><%= user.Role %></td>
                         <td>
                             <a type="button" class="btnUpdate btn btn-outline-primary bi bi-pencil" ></a> 
-                            <a href="/delete/ <%= user._id %>" class="btn btn-outline-danger bi bi-trash"></a> 
+                            <a class="btnDelete btn btn-outline-danger bi bi-trash" data-id="<%= user._id %>" ></a> 
                         </td>
                     </tr>
                 <% }) %>
@@ -36,64 +83,66 @@
     </div>
     
 
-<div>
-    <div  id="modalUsers" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit User</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div>
+        <div  id="modalUsers" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit User</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateUserForm" method="POST">
+                        <input name="idUpdate" id="idUpdate" type="text" hidden>
+                        <div class="mb-3">
+                        <label for="namesUpdate" class="col-form-label">Names: <span class="required-asterisk">*</label>
+                        <input type="text" class="form-control" id="namesUpdate" name="namesUpdate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastNamesUpdate" class="col-form-label">Last names: <span class="required-asterisk">*</label>
+                            <input type="text" class="form-control" id="lastNamesUpdate" name="lastNamesUpdate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="typeIDupdate" class="col-form-label">Type ID: <span class="required-asterisk">*</span></label>
+                            <select id="typeIDupdate" name="typeIDupdate" class="form-control">
+                                <option selected disabled value="">Choose...</option>
+                                <option value="Foreign ID">Foreign ID</option>
+                                <option value="ID">ID</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="IDupdate" class="col-form-label"> ID: <span class="required-asterisk">*</label>
+                            <input type="text" class="form-control" id="IDupdate" name="IDupdate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="RoleUpdate" class="col-form-label">Role: <span class="required-asterisk">*</span></label>
+                            <select id="RoleUpdate" name="RoleUpdate" class="form-control">
+                                <option selected disabled value="">Choose...</option>
+                                <option value="Vet">Veterinary</option>
+                                <option value="Pet owner">Pet owner</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userUpdate" class="col-form-label">Username (Email): <span class="required-asterisk">*</label>
+                            <input type="text" class="form-control" id="userUpdate" name="userUpdate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordUpdate" class="col-form-label">Password: </label>
+                            <input type="password" class="form-control" id="passwordUpdate" name="passwordUpdate">
+                        </div>
+                        <div class="modal-footer">
+                            <div class="error-message text-danger text-center" id="warnings"></div>
+                            <div id="valid" class=" text-success text-center"></div>
+                            <button type="button" class="btn btn-secondary btn-danger" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="btnEdit">Update</button>
+                        </div>
+                    </form>
+                </div>  
             </div>
-            <div class="modal-body">
-                <form action="/edit" method="POST">
-                    <input name="idUpdate" id="idUpdate" type="text" hidden>
-                    <div class="mb-3">
-                    <label for="namesUpdate" class="col-form-label">Names:</label>
-                    <input type="text" class="form-control" id="namesUpdate" name="namesUpdate">
-                    </div>
-                    <div class="mb-3">
-                        <label for="lastNamesUpdate" class="col-form-label"> Last names:</label>
-                        <input type="text" class="form-control" id="lastNamesUpdate" name="lastNamesUpdate">
-                    </div>
-                    <div class="mb-3">
-                        <label for="typeIDupdate" class="col-form-label">Type ID: </span></label>
-                        <select id="typeIDupdate" name="typeIDupdate" class="form-control">
-                        <option selected disabled value="">Choose...</option>
-                        <option value="Foreign ID">Foreign ID</option>
-                        <option value="ID">ID</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="IDupdate" class="col-form-label"> ID:</label>
-                        <input type="text" class="form-control" id="IDupdate" name="IDupdate">
-                    </div>
-                    <div class="mb-3">
-                        <label for="RoleUpdate" class="col-form-label">Role:</span></label>
-                        <select id="RoleUpdate" name="RoleUpdate" class="form-select">
-                        <option selected disabled value="">Choose...</option>
-                        <option value="Vet">Veterinary</option>
-                        <option value="Pet owner">Pet owner</option>
-                        <option value="Admin">Admin</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="userUpdate" class="col-form-label"> Username (Email):</label>
-                        <input type="text" class="form-control" id="userUpdate" name="userUpdate">
-                    </div>
-                    <div class="mb-3">
-                        <label for="passwordUpdate" class="col-form-label"> Password:</label>
-                        <input type="text" class="form-control" id="passwordUpdate" name="passwordUpdate">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </div>
-                </form>
-            </div>  
-        </div>
+            </div>
         </div>
     </div>
-</div>
 
 
     

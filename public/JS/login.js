@@ -25,7 +25,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         }
     
         if(passwordInput.length < 8 || passwordInput.length > 15){
-            warnings+='The password must contain between 8 and 15 characters <br>';
+            warnings+='The password must contain 12 characters <br>';
             send=true
         }
     }
@@ -48,7 +48,6 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     .then(response => response.json())
     .then(data => {
         if (!data.error) {
-            s.innerHTML = data.message;
             sessionStorage.setItem('user', JSON.stringify(data));
             
             if (data.Role === 'Admin'){
@@ -61,11 +60,6 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 window.location.href = 'http://localhost:3000/HTML/landingOwner.html'
                 localStorage.setItem('ownerID', data.ID);
             }
-            setTimeout(() => {
-                s.innerHTML = ""; 
-                p.innerHTML = ""; 
-            }, 3000);
-            document.getElementById('loginForm').reset();
         } else {
             p.innerHTML = data.error; 
         }
