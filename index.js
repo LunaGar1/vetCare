@@ -6,6 +6,7 @@ const Pet = require('./models/petModel');
 const App = require('./models/appModel');
 const cors = require('cors');
 const session = require('express-session');
+const multer = require('multer');
 const path = require('path');
 
 const app = express();

@@ -8,6 +8,44 @@
     <link rel="stylesheet" href="../CSS/pets.css">
 </head>
 <body>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand me-auto" href="#">VetCare</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">VetCare</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link mx-lg" id="home" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg" id="profile">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-lg active" aria-current="page" id="Users" href="#">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-lg" href="#">Schedule</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link mx-lg" href="#">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <a id="logout" class="loginButton" >Logout</a>
+      <button  class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
     <div class="container">
         <div class="title" style="display: flex; justify-content: space-between;">
             <h1>My pets</h1>
@@ -68,10 +106,14 @@
                       <option value="mini pig">Mini pig</option>
                     </select>
                   </div>
-                  <div class="col-12">
+                  <div class="col-md-6">
                     <label for="breed" class="form-label">Breed <span class="required-asterisk">*</span></label>
                     <input type="text" class="form-control" id="breed">
                   </div>
+                  <!-- <div class="col-md-6">
+                    <label for="petPhoto" class="form-label">Upload a photo of your pet <span class="required-asterisk">*</span></label>
+                    <input type="file" class="form-control" id="petPhoto" name="petPhoto" accept="image/*" required>
+                  </div> -->
                   <div class="error-message text-danger text-center" id="warnings"></div>
                     <div id="valid" class=" text-success text-center"></div>
                   <div class="col-md-6" style="display: flex; justify-content: right; ">

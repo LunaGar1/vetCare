@@ -77,10 +77,20 @@ body {
     }
 }
 
+.btn-new{
+    background-color: #6766dc;
+    color: white;
+}
 
+.btn-new:hover{
+    background-color: #5a58be;
+    color: white;
+}
+  
 
 .headline{
     margin: 2%;
+    color: #6766dc;
 }
 
 .required-asterisk {
