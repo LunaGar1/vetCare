@@ -9,4 +9,6 @@ router.get('/profile', Controller.renderProfile);
 
 router.get('/showUsers', Controller.showUsers);
 
+router.get('/getVets', Controller.getVets);
+
 module.exports = router;

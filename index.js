@@ -7,7 +7,6 @@ const cors = require('cors');
 const session = require('express-session');
 const path = require('path');
 
-
 const app = express();
 
 connectDB();
@@ -26,21 +25,23 @@ app.use(session({
     saveUninitialized: true,
 }));
 
-var user = require('./routers/user');
-app.use('/user', user)
-
-
-
 // Configuración de EJS
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+
+var user = require('./routers/user');
+app.use('/user', user)
 
 var pet = require('./routers/pet');
 app.use('/pet', pet)
 
 var login = require('./routers/login');
 app.use('/login', login);
+
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

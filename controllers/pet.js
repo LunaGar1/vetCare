@@ -2,8 +2,8 @@ const petModel = require('../models/petModel');
 
 async function register(req, res){
   try {
-    const { name, date, sex, type, breed, ownerID } = req.body;
-    const newPet = new petModel({ name, date, sex, type, breed, ownerID});
+    const { name, age, sex, type, breed, ownerID } = req.body;
+    const newPet = new petModel({ name, age, sex, type, breed, ownerID});
     await newPet.save();
     res.status(201).json({ message: 'Pet registered' });
   } catch (error) {
@@ -13,16 +13,20 @@ async function register(req, res){
 
 }
 
-// async function getAllPets(req, res) {
-//   try {
-//       const pets = await Pet.find(); 
-//       res.json(pets);
-//   } 
-//   catch (error) {
-//       res.status(500).json({ message: 'Error al obtener las mascotas' });
-//   }
-// }
+async function getPetsByOwner(req, res) {
+  try {
+    console.log('ownerid', req.query)
+    const ownerIdParam = req.query.ownerId; 
+    const pets = await petModel.find({ "ownerID": ownerIdParam });
+    console.log('pets', await pets);
+    await res.json(pets);
+  } catch (error) {
+    console.error('Error al obtener mascotas:', error);
+    res.status(500).json({ message: 'Error al obtener las mascotas' });
+  }
+};
 
 module.exports = {
-    register
+    register,
+    getPetsByOwner
 }

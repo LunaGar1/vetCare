@@ -26,8 +26,6 @@ async function register(req, res){
 
 };
 
-
-
 const renderProfile = async (req, res) => {
   if (!req.session.userId) {
       return res.redirect('../HTML/login.html');
@@ -54,8 +52,19 @@ const showUsers = async (req, res) => {
   }
 };
 
+const getVets = async (req, res) => {
+  try {
+      const vets = await userModel.find({ role: 'vet' });
+      res.json(vets);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error fetching vets' });
+  }
+};
+
 module.exports = {
     register,
     renderProfile,
     showUsers,
+    getVets
 };

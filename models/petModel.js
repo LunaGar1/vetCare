@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const petSchema = new mongoose.Schema({
   name: String,
-  date: Date,
+  age: Number,
   sex: String,
   type: String,
   breed: String,
-  // ownerID: String
+  ownerID: String
 });
 
 

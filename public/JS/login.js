@@ -59,7 +59,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     
             } else if (data.Role === 'Pet owner'){
                 window.location.href = 'http://localhost:3000/HTML/landingOwner.html'
-                // localStorage.setItem('ID', data.ID);
+                localStorage.setItem('ownerID', data.ID);
             }
             setTimeout(() => {
                 s.innerHTML = ""; 
