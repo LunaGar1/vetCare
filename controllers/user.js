@@ -121,19 +121,16 @@ const updatePassword = async (req, res) => {
 
 const deleteOneUser = async (req, res) => {
   try {
-    // Verifica si el usuario está autenticado
     if (!req.session.userId) {
       return res.status(401).json({ message: 'User not authenticated' });
     }
 
-    // Utiliza el userId almacenado en la sesión para eliminar al usuario
     const result = await userModel.findByIdAndDelete(req.session.userId);
 
     if (!result) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Destruye la sesión después de eliminar al usuario
     req.session.destroy((err) => {
       if (err) {
         console.error('Error destroying session:', err);
