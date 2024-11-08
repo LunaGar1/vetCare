@@ -171,7 +171,7 @@ document.querySelectorAll('.btnDelete').forEach(button => {
                 const data = await response.json();
                 if (!data.error) {
                     alert('User deleted successfully');
-                    location.reload(); // Recarga la página para actualizar la lista de usuarios
+                    location.reload();
                 } else {
                     alert(data.error);
                 }

@@ -61,6 +61,7 @@
                     <th>ID:</th>
                     <th>Names:</th>
                     <th>Last Names:</th>
+                    <th>Role:</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -70,6 +71,7 @@
                         <td><%= user.ID %></td>
                         <td><%= user.names %></td>
                         <td><%= user.lastNames %></td>
+                        <td><%= user.Role %></td>
                         <td>
                             <a type="button" class="btnUpdate btn btn-outline-primary bi bi-pencil" ></a> 
                             <a class="btnDelete btn btn-outline-danger bi bi-trash" data-id="<%= user._id %>" ></a> 
@@ -103,9 +105,9 @@
                         <div class="mb-3">
                             <label for="typeIDupdate" class="col-form-label">Type ID: <span class="required-asterisk">*</span></label>
                             <select id="typeIDupdate" name="typeIDupdate" class="form-control">
-                            <option selected disabled value="">Choose...</option>
-                            <option value="Foreign ID">Foreign ID</option>
-                            <option value="ID">ID</option>
+                                <option selected disabled value="">Choose...</option>
+                                <option value="Foreign ID">Foreign ID</option>
+                                <option value="ID">ID</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -114,11 +116,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="RoleUpdate" class="col-form-label">Role: <span class="required-asterisk">*</span></label>
-                            <select id="RoleUpdate" name="RoleUpdate" class="form-select">
-                            <option selected disabled value="">Choose...</option>
-                            <option value="Vet">Veterinary</option>
-                            <option value="Pet owner">Pet owner</option>
-                            <option value="Admin">Admin</option>
+                            <select id="RoleUpdate" name="RoleUpdate" class="form-control">
+                                <option selected disabled value="">Choose...</option>
+                                <option value="Vet">Veterinary</option>
+                                <option value="Pet owner">Pet owner</option>
+                                <option value="Admin">Admin</option>
                             </select>
                         </div>
                         <div class="mb-3">

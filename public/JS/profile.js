@@ -27,7 +27,6 @@ on(document, 'click', '.btnUpdate', async e => {
         document.getElementById('RoleUpdate').value = userData.Role;
         document.getElementById('userUpdate').value = userData.user;
 
-        // Mostrar el modal o hacer alguna acción
         modalUsers.show();
     } catch (error) {
 
@@ -40,7 +39,7 @@ on(document, 'click', '.btnUpdate', async e => {
 const p=document.getElementById("warnings");
 const s=document.getElementById("valid");
 document.getElementById('updateUserForm').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+    event.preventDefault();
 
     const newPassword = document.getElementById('passwordUpdate').value;
 
@@ -65,7 +64,7 @@ document.getElementById('updateUserForm').addEventListener('submit', async funct
                 location.reload();
             }, 3000);
         } else {
-            p.innerHTML = result.error; // Muestra el error si no fue exitoso
+            p.innerHTML = result.error;
         }
     } catch (error) {
         console.error('Error:', error);
@@ -74,6 +73,30 @@ document.getElementById('updateUserForm').addEventListener('submit', async funct
 });
 
 
+document.getElementById('btnDelete').addEventListener('click', async function () {
+    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+        try {
+            const response = await fetch('/user/deleteOneUser', {
+                method: 'DELETE', // El método HTTP es DELETE
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message); // Mostrar mensaje de éxito
+                window.location.href = '/HTML/login.html'; // Redirigir a la página de inicio de sesión
+            } else {
+                alert(result.message || 'Error deleting user'); // Mostrar mensaje de error
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('There was an error deleting your account. Please try again.');
+        }
+    }
+});
 
 
 

@@ -47,7 +47,7 @@ const getOneUser = async (req, res) => {
     userModel.findById(req.session.userId)
       .then(user => {
         if (user) {
-          res.json(user); // Devuelve los datos del usuario como JSON
+          res.json(user); 
         } else {
           res.status(404).json({ error: 'User not found' });
         }
@@ -65,20 +65,16 @@ const updatePassword = async (req, res) => {
   const { newPassword } = req.body;
 
   try {
-    // Verifica si el usuario está autenticado
     if (!req.session.userId) {
       return res.status(401).json({ error: 'User not authenticated' });
     }
 
-    // Encuentra el usuario en la base de datos usando el ID de la sesión
     const user = await userModel.findById(req.session.userId);
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
     
-
-    // Verifica que la nueva contraseña sea válida (puedes agregar validaciones adicionales si lo deseas)
     if (newPassword.length < 12) {
       return res.status(400).json({ error: 'New password must be at least 12 characters long' });
     }
@@ -94,7 +90,6 @@ const updatePassword = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    // Guarda el usuario con la nueva contraseña
     user.hashedPassword = hashedPassword;
     await user.save();
 
@@ -104,6 +99,37 @@ const updatePassword = async (req, res) => {
     return res.status(500).json({ error: 'Error updating password' });
   }
 };
+
+
+const deleteOneUser = async (req, res) => {
+  try {
+    // Verifica si el usuario está autenticado
+    if (!req.session.userId) {
+      return res.status(401).json({ message: 'User not authenticated' });
+    }
+
+    // Utiliza el userId almacenado en la sesión para eliminar al usuario
+    const result = await userModel.findByIdAndDelete(req.session.userId);
+
+    if (!result) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Destruye la sesión después de eliminar al usuario
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error destroying session:', err);
+        return res.status(500).json({ message: 'Error deleting user session' });
+      }
+
+      res.status(200).json({ message: 'User deleted successfully' });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error deleting user', error: error.message });
+  }
+};
+
 
 
 
@@ -184,7 +210,7 @@ const editUser = async (req, res) => {
           names: namesUpdate,
           lastNames: lastNamesUpdate,
           typeID: typeIDupdate,
-          role: RoleUpdate,
+          Role: RoleUpdate,
           username: userUpdate
         },
         { new: true }
@@ -228,6 +254,7 @@ module.exports = {
     renderProfile,
     getOneUser,
     updatePassword,
+    deleteOneUser,
     showUsers,
     getUserById,
     editUser,

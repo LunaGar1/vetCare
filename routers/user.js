@@ -19,4 +19,6 @@ router.get("/getOneUser", Controller.getOneUser);
 
 router.post("/updatePassword", Controller.updatePassword);
 
+router.delete("/deleteOneUser", Controller.deleteOneUser);
+
 module.exports = router;
