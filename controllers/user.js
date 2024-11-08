@@ -42,6 +42,98 @@ const renderProfile = async (req, res) => {
   }
 };
 
+const getOneUser = async (req, res) => {
+  if (req.session.userId) {
+    userModel.findById(req.session.userId)
+      .then(user => {
+        if (user) {
+          res.json(user); 
+        } else {
+          res.status(404).json({ error: 'User not found' });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ error: 'Error fetching user' });
+      });
+  } else {
+    res.status(401).json({ error: 'User not authenticated' });
+  }
+};
+
+
+const updatePassword = async (req, res) => {
+  const { newPassword } = req.body;
+
+  try {
+    if (!req.session.userId) {
+      return res.status(401).json({ error: 'User not authenticated' });
+    }
+
+    const user = await userModel.findById(req.session.userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    if (newPassword.length < 12) {
+      return res.status(400).json({ error: 'New password must be at least 12 characters long' });
+    }
+
+    const isSamePassword = await bcrypt.compare(newPassword, user.hashedPassword);
+
+      if (isSamePassword) {
+        return res.status(400).json({
+          error: 'New password cannot be the same as the current password'
+        });
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user.hashedPassword = hashedPassword;
+    await user.save();
+
+    return res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Error updating password' });
+  }
+};
+
+
+const deleteOneUser = async (req, res) => {
+  try {
+    // Verifica si el usuario está autenticado
+    if (!req.session.userId) {
+      return res.status(401).json({ message: 'User not authenticated' });
+    }
+
+    // Utiliza el userId almacenado en la sesión para eliminar al usuario
+    const result = await userModel.findByIdAndDelete(req.session.userId);
+
+    if (!result) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Destruye la sesión después de eliminar al usuario
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error destroying session:', err);
+        return res.status(500).json({ message: 'Error deleting user session' });
+      }
+
+      res.status(200).json({ message: 'User deleted successfully' });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error deleting user', error: error.message });
+  }
+};
+
+
+
+
+
 const showUsers = async (req, res) => {
   try {
       const users = await userModel.find({});
@@ -118,7 +210,7 @@ const editUser = async (req, res) => {
           names: namesUpdate,
           lastNames: lastNamesUpdate,
           typeID: typeIDupdate,
-          role: RoleUpdate,
+          Role: RoleUpdate,
           username: userUpdate
         },
         { new: true }
@@ -138,13 +230,34 @@ const editUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await userModel.findByIdAndDelete(id);
+
+    if (!result) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error deleting user', error: error.message });
+  }
+};
+
+
 
 
 module.exports = {
     register,
     renderProfile,
+    getOneUser,
+    updatePassword,
+    deleteOneUser,
     showUsers,
     getUserById,
     editUser,
+    deleteUser,
 };
 

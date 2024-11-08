@@ -112,5 +112,5 @@ document.getElementById('userRegister').addEventListener('submit', async functio
 });
 
 document.getElementById('cancelButton').addEventListener('click', function() {
-    window.location.href = '../HTML/landingAdmin.html';
+    window.location.href = 'http://localhost:3000/user/showUsers';
 });
