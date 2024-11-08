@@ -9,8 +9,6 @@ router.get('/profile', Controller.renderProfile);
 
 router.get('/showUsers', Controller.showUsers);
 
-router.get('/getVets', Controller.getVets);
-
 router.get('/getUser/:ID', Controller.getUserById);
 
 router.post('/editUser', Controller.editUser);
@@ -22,5 +20,7 @@ router.get("/getOneUser", Controller.getOneUser);
 router.post("/updatePassword", Controller.updatePassword);
 
 router.delete("/deleteOneUser", Controller.deleteOneUser);
+
+router.get("/getAllVets", Controller.getAllVets);
 
 module.exports = router;

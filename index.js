@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const connectDB = require('./db');
 const User = require('./models/userModel');
 const Pet = require('./models/petModel');
+const App = require('./models/appModel');
 const cors = require('cors');
 const session = require('express-session');
 const path = require('path');
@@ -41,6 +42,8 @@ var login = require('./routers/login');
 app.use('/login', login);
 
 
+var appointment = require('./routers/app');
+app.use('/app', appointment);
 
 
 const PORT = process.env.PORT || 3000;

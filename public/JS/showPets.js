@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               const petActionCell = document.createElement("td");
               petActionCell.textContent = 'Editar';   
         
-              // Añade la fila al cuerpo de la tabla
+            
               
               petRow.appendChild(petNameCell);
               petRow.appendChild(petAgeCell);
@@ -64,6 +64,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     alert('There was an error getting the pets');
     }
 });
+
+
     
     const p=document.getElementById("warnings");
     const s=document.getElementById("valid");

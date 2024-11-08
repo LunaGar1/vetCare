@@ -60,6 +60,24 @@ const getOneUser = async (req, res) => {
   }
 };
 
+const getAllVets = async (req, res) => {
+
+  // if (req.session.userId) {
+    userModel.find({ "Role": "Vet" }).then(vets => {
+      if (vets) {
+        res.send(vets); 
+      } else {
+        res.status(404).json({ error: 'Vets not found' });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Error fetching Vets' });
+    });
+  // } else {
+  //   res.status(401).json({ error: 'User not authenticated' });
+  // }
+};
+
 
 const updatePassword = async (req, res) => {
   const { newPassword } = req.body;
@@ -259,5 +277,6 @@ module.exports = {
     getUserById,
     editUser,
     deleteUser,
+    getAllVets
 };
 

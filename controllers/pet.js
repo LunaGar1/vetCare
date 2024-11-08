@@ -15,11 +15,10 @@ async function register(req, res){
 
 async function getPetsByOwner(req, res) {
   try {
-    console.log('ownerid', req.query)
     const ownerIdParam = req.query.ownerId; 
     const pets = await petModel.find({ "ownerID": ownerIdParam });
-    console.log('pets', await pets);
     await res.json(pets);
+    
   } catch (error) {
     console.error('Error al obtener mascotas:', error);
     res.status(500).json({ message: 'Error al obtener las mascotas' });
