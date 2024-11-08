@@ -77,7 +77,7 @@ document.getElementById('btnDelete').addEventListener('click', async function ()
     if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
         try {
             const response = await fetch('/user/deleteOneUser', {
-                method: 'DELETE', // El método HTTP es DELETE
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -86,10 +86,10 @@ document.getElementById('btnDelete').addEventListener('click', async function ()
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.message); // Mostrar mensaje de éxito
-                window.location.href = '/HTML/login.html'; // Redirigir a la página de inicio de sesión
+                alert(result.message); 
+                window.location.href = '/HTML/login.html'; 
             } else {
-                alert(result.message || 'Error deleting user'); // Mostrar mensaje de error
+                alert(result.message || 'Error deleting user'); 
             }
         } catch (error) {
             console.error('Error:', error);

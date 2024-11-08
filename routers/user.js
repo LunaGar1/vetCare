@@ -9,8 +9,6 @@ router.get('/profile', Controller.renderProfile);
 
 router.get('/showUsers', Controller.showUsers);
 
-router.get('/getVets', Controller.getVets);
-
 router.get('/getUser/:ID', Controller.getUserById);
 
 router.post('/editUser', Controller.editUser);
