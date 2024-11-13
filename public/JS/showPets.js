@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 petActionCell.className = "text-end"; 
         
                 const editButton = document.createElement("button");
-                editButton.className = "btnUpdate btn btn-primary btn-sm me-2"; 
+                editButton.className = "btnUpdate btn btn-new btn-sm me-2"; 
                 editButton.innerHTML = '<i class="bi bi-pencil"></i>'; 
                 editButton.setAttribute('data-id', pet2._id);
 
@@ -88,10 +88,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 petActionCell.appendChild(editButton);
                 petActionCell.appendChild(deleteButton);
 
-        
-              
-        
-            
               
                 petRow.appendChild(petNameCell);
                 petRow.appendChild(petAgeCell);
@@ -229,7 +225,7 @@ document.querySelector('#tablePets').addEventListener('click', async function (e
 
 
 document.querySelector('#updatePetform').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+    event.preventDefault(); 
 
     const petId = document.querySelector('#idUpdate').value;
     const updatedName = document.querySelector('#nameUpdate').value;
@@ -278,7 +274,6 @@ document.querySelector('#updatePetform').addEventListener('submit', async functi
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                //'Authorization': `Bearer ${localStorage.getItem('authToken')}`
             },
             body: JSON.stringify({
                 name: updatedName,
