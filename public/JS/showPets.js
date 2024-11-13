@@ -89,8 +89,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 petActionCell.appendChild(deleteButton);
 
         
-              const petActionCell = document.createElement("td");
-              petActionCell.textContent = 'Editar';   
+              
         
             
               
@@ -239,8 +238,8 @@ document.querySelector('#updatePetform').addEventListener('submit', async functi
     const updatedType = document.querySelector('#typeUpdate').value;
     const updatedBreed = document.querySelector('#breedUpdate').value;
 
-    const p=document.getElementById("warnings");
-    const s=document.getElementById("valid");
+    const p=document.getElementById("warnings2");
+    const s=document.getElementById("valid2");
 
     let warnings  = ""
     let send = false
@@ -298,7 +297,7 @@ document.querySelector('#updatePetform').addEventListener('submit', async functi
             setTimeout(() => {
                 s.innerHTML = "";
                 p.innerHTML = "";
-                //location.reload();
+                location.reload();
             }, 3000);
         } else {
             p.innerHTML = data.message;
