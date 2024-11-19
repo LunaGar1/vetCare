@@ -27,17 +27,17 @@ document.getElementById('logout').addEventListener('click', function() {
 
 
 openModalBtn.addEventListener('click', function() {
-    petModal.style.display = 'block'; 
+    appModal.style.display = 'block'; 
 });
 
 
 cancelButton.addEventListener('click', function() {
-    petModal.style.display = 'none'; 
+    appModal.style.display = 'none'; 
 });
 
 window.addEventListener('click', function(event) {
-    if (event.target === petModal) {
-        petModal.style.display = 'none';
+    if (event.target === appModal) {
+        appModal.style.display = 'none';
     }
 });
 
@@ -155,6 +155,8 @@ document.getElementById('appRegister').addEventListener('submit', async function
                 setTimeout(() => {
                     s.innerHTML = "";
                     p.innerHTML = "";
+                    appModal.hide();
+                    location.reload();
                 }, 3000);
                 document.getElementById('appRegister').reset();
             }

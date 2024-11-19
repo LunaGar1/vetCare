@@ -175,6 +175,7 @@ document.getElementById('petRegister').addEventListener('submit', async function
             setTimeout(() => {
                 s.innerHTML = "";
                 p.innerHTML = "";
+                petModal.hide();
                 location.reload();
             }, 3000);
             document.getElementById('petRegister').reset();
@@ -292,6 +293,7 @@ document.querySelector('#updatePetform').addEventListener('submit', async functi
             setTimeout(() => {
                 s.innerHTML = "";
                 p.innerHTML = "";
+                petModalUpdate.hide();
                 location.reload();
             }, 3000);
         } else {
