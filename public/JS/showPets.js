@@ -2,6 +2,8 @@ const openModalBtn = document.getElementById('newPet');
 const petModal = document.getElementById('petModal'); 
 const cancelButton = document.getElementById('cancelButton'); 
 const closeButton = document.querySelector('.close'); 
+const petModalU = document.getElementById('petModalUpdate'); 
+
 
 openModalBtn.addEventListener('click', function() {
     petModal.style.display = 'block'; 
@@ -18,9 +20,13 @@ window.addEventListener('click', function(event) {
     }
 });
 
-cancelBtn.addEventListener('click', function() {
-    petModalUpdate.style.display = 'none';
+
+window.addEventListener('click', function(event) {
+    if (event.target === petModalUpdate) {
+        petModalUpdate.style.display = 'none';
+    }
 });
+
 
 document.getElementById('home').addEventListener('click', function() {
     window.location.href = '../HTML/landingOwner.html';
@@ -44,6 +50,9 @@ document.getElementById('logout').addEventListener('click', function() {
     window.location.href = '../HTML/login.html';
 });
 
+
+const p = document.getElementById("warnings");
+const s = document.getElementById("valid");
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -71,13 +80,18 @@ document.addEventListener("DOMContentLoaded", async () => {
                 petAgeCell.textContent = await pet2.age;
 
 
-                const petActionCell = document.createElement("td");
-                petActionCell.className = "text-end"; 
+                // const petActionCell = document.createElement("td");
+                // petActionCell.className = "text-end"; 
         
                 const editButton = document.createElement("button");
-                editButton.className = "btnUpdate btn btn-new btn-sm me-2"; 
+                editButton.className = "btnUpdate btn btn-update btn-sm me-2"; 
                 editButton.innerHTML = '<i class="bi bi-pencil"></i>'; 
                 editButton.setAttribute('data-id', pet2._id);
+
+                const petProfileButton = document.createElement("button");
+                petProfileButton.className = "btnUpdate btn btn-update btn-sm me-2"; 
+                petProfileButton.innerHTML = '<i class="bi bi-person-circle"></i>'; 
+                petProfileButton.setAttribute('data-id', pet2._id);
 
                 
                 const deleteButton = document.createElement("button");
@@ -86,8 +100,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 deleteButton.setAttribute('data-id', pet2._id);
                
                 petActionCell.appendChild(editButton);
+                petActionCell.appendChild(petProfileButton);
                 petActionCell.appendChild(deleteButton);
-
+                
               
                 petRow.appendChild(petNameCell);
                 petRow.appendChild(petAgeCell);
@@ -104,10 +119,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     alert('There was an error getting the pets');
     }
 });
-
-
-    
-
 
 document.getElementById('petRegister').addEventListener('submit', async function(event) {
 
@@ -226,29 +237,26 @@ document.querySelector('#tablePets').addEventListener('click', async function (e
 
 
 document.querySelector('#updatePetform').addEventListener('submit', async function (event) {
-    event.preventDefault(); 
+    event.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+    try {
+        const petId = document.querySelector('#idUpdate').value;
+        const updatedName = document.querySelector('#nameUpdate').value;
+        const updatedAge = document.querySelector('#ageUpdate').value;
+        const updatedSex = document.querySelector('#sexUpdate').value;
+        const updatedType = document.querySelector('#typeUpdate').value;
+        const updatedBreed = document.querySelector('#breedUpdate').value;
 
-    const petId = document.querySelector('#idUpdate').value;
-    const updatedName = document.querySelector('#nameUpdate').value;
-    const updatedAge = document.querySelector('#ageUpdate').value;
-    const updatedSex = document.querySelector('#sexUpdate').value;
-    const updatedType = document.querySelector('#typeUpdate').value;
-    const updatedBreed = document.querySelector('#breedUpdate').value;
+        let warnings  = ""
+        let send = false
+        p.innerHTML = ""
+        s.innerHTML = ""
 
-    const p=document.getElementById("warnings2");
-    const s=document.getElementById("valid2");
-
-    let warnings  = ""
-    let send = false
-    p.innerHTML = ""
-    s.innerHTML = ""
-
-    if (!updatedName || !updatedAge || !updatedSex || !updatedBreed || !updatedType){
+        if (!updatedName || !updatedAge || !updatedSex || !updatedBreed || !updatedType){
         warnings+= 'All fields are required <br>';
         send = true
-    }
-    else{
-        if(updatedName.length < 3 || updatedName.length > 20){
+        }
+        else{
+            if(updatedName.length < 3 || updatedName.length > 20){
             warnings+= 'The name must contain between 3 and 20 characters <br>';
             send = true
         }
@@ -262,52 +270,47 @@ document.querySelector('#updatePetform').addEventListener('submit', async functi
             warnings+= 'The age must be between 0 and 30 years <br>';
             send = true
         }
-    }
+        }
 
-    if(send){
-        p.innerHTML = warnings
-        return;
-    }
-
-    
-    try {
-        const response = await fetch(`/pet/updatePet/${petId}`, {
+        if(send){
+            p.innerHTML = warnings
+            return;
+        }
+        await fetch(`/pet/updatePet/${petId}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: updatedName,
-                age: updatedAge,
-                sex: updatedSex,
-                type: updatedType,
-                breed: updatedBreed
-            })
-        });
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({
+            name: updatedName,
+            age: updatedAge,
+            sex: updatedSex,
+            type: updatedType,
+            breed: updatedBreed
+        })
+        }).then(async data => {
+        console.log(data.status)
 
-        const data = await response.json();
-        console.log(data);
-        if (response.ok) {
+        if (data.status == 404) {
+            p.innerHTML = 'Pet not found.';
+
+        } else if (data.status == 200) {
             s.innerHTML = 'Pet updated successfully';
-
+            
             setTimeout(() => {
                 s.innerHTML = "";
                 p.innerHTML = "";
-                petModalUpdate.hide();
-                location.reload();
             }, 3000);
-        } else {
-            p.innerHTML = data.message;
+            document.getElementById('updatePetform').reset();
         }
+        }).catch(error => { 
+            console.error('Error', error);
+        });
     } catch (error) {
-        console.error('Error updating pet:', error);
-        p.innerHTML='Error updating pet. Please try again.';
+        console.log(error)  
     }
-});
-
-
-
-
+});    
 
 document.querySelector('#tablePets').addEventListener('click', async function (event) {
     if (event.target.closest('.btnDelete')) { 

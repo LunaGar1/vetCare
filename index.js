@@ -31,8 +31,6 @@ app.use(session({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-
-
 var user = require('./routers/user');
 app.use('/user', user)
 
@@ -41,7 +39,6 @@ app.use('/pet', pet)
 
 var login = require('./routers/login');
 app.use('/login', login);
-
 
 var appointment = require('./routers/app');
 app.use('/app', appointment);

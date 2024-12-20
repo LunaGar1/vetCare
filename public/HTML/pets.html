@@ -111,10 +111,6 @@
                     <label for="breed" class="form-label">Breed <span class="required-asterisk">*</span></label>
                     <input type="text" class="form-control" id="breed">
                   </div>
-                  <!-- <div class="col-md-6">
-                    <label for="petPhoto" class="form-label">Upload a photo of your pet <span class="required-asterisk">*</span></label>
-                    <input type="file" class="form-control" id="petPhoto" name="petPhoto" accept="image/*" required>
-                  </div> -->
                   <div class="error-message text-danger text-center" id="warnings"></div>
                     <div id="valid" class=" text-success text-center"></div>
                   <div class="col-md-6" style="display: flex; justify-content: right; ">
@@ -175,7 +171,7 @@
                 <div class="error-message text-danger text-center" id="warnings2"></div>
                 <div id="valid2" class=" text-success text-center"></div>
                 <div class="col-md-6" style="display: flex; justify-content: right; ">
-                  <button type="submit" class="btn btn-secondary btnCreate">Update</button>
+                  <button type="submit" class="btn btn-secondary btnCreate" id="update">Update</button>
                 </div>
                 <div class="col-md-6" style="display: flex; justify-content: left;">
                   <button type="button" class="btn btn-danger" id="cancelBtn">Cancel</button>
@@ -185,10 +181,9 @@
       </div>
   </div>
 
-    
+    <script src="../JS/showPets.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="../JS/showPets.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script> 
   </body>
 </html>

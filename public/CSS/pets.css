@@ -97,6 +97,16 @@ body {
     background-color: #5a58be;
     color: white;
   }
+
+  .btnUpdate{
+    background-color: #6766dc;
+    color: white;
+  }
+
+  .btnUpdate:hover{
+    background-color: #5a58be;
+    color: white;
+  }
   
   h1 {
     text-align: center;
