@@ -93,4 +93,14 @@ As a pre-parameter you'll have to install some programs such as:
 And enter on "Insert" button
 
 14. Go to visual again and use the command on the terminal: "node index.js"
-15. 
+15. Open the browser and search the browser and look for the addres "http://localhost:3000/HTML/login.html"
+16. You can login with any of the users you saved in the "users" collection of MongoDB
+
+## Process
+Our website was created in about 2 months, we use git as our version control software. We work separately and in different branches dividing our work equally. Overall, it was a great process, we learned a lot.
+
+### Built with
+We built the web using HTML, CSS and JS. We used Visual as our workspace and git to control changes of the web
+
+## Authors
+Luna Penagos Garcia and Sara Murillo
