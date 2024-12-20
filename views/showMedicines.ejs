@@ -51,7 +51,7 @@
         <div class=" headline mt-4" style="display: flex; justify-content: space-between;">
             <h1 col-md-6>Medicines</h1>
             <div class="text-end" style="display: flex; align-content: center; align-items: center;">
-                <button type="button" class="btnNewProduct btn btn-new" id="btnNewProduct">New medicine</button>
+                <button type="button" class="btnNewMedicine btn btn-new" id="btnNewMedicine">New medicine</button>
             </div>
         </div>
         <table id="tableMedicines" class="table mt-4">
@@ -67,7 +67,6 @@
               <% medicines.forEach ((medicine) => { %>
                   <tr data-id="<%= medicine._id %>">
                       <td><%= medicine.name %></td>
-                      <td><%= medicine.category %></td>
                       <td><%= medicine.price %></td>
                       <td class="stock1"><%= medicine.stock %>
                       </td>
@@ -157,6 +156,6 @@
         </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../JS/showProducts.js"></script>
+    <script src="../JS/showMedicines.js"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@ const Controller = require('../controllers/medicines');
 
 router.get('/showMedicines', Controller.showMedicines);
 
+router.post('/register', Controller.register);
 
 
 
