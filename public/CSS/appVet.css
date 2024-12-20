@@ -1,9 +1,17 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
 .navbar{
     background-color: #bbb8dd;
     height: 80px;
     margin: 0;
     padding: 0.5rem;
     position: sticky;
+
   }
   
   .navbar-brand{
@@ -70,13 +78,13 @@
       font-family: Georgia, 'Times New Roman', Times, serif;
       background-color: #f4f4f4;
       margin: 0;
-      padding: 20px;
+      padding: 0;
     }
     
     .container {
-      width: 80%;
-      max-width: 800px;
-      margin: 0 auto;
+      width: 90%;
+      max-width: 1000px;
+      margin-top: 2%;
       background-color: #fff;
       padding: 20px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
