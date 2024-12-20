@@ -95,7 +95,7 @@ const deletePet = async (req, res) => {
     res.status(200).json({ message: 'Pet deleted successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Pet deleting user', error: error.message });
+    res.status(500).json({ message: 'Error deleting pet', error: error.message });
   }
 };
 

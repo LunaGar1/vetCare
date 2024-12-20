@@ -24,7 +24,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             send=true
         }
     
-        if(passwordInput.length < 8 || passwordInput.length > 15){
+        if(passwordInput.length < 12){
             warnings+='The password must contain 12 characters <br>';
             send=true
         }

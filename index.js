@@ -20,6 +20,8 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
+
+
 //******* ROUTERS******* */
 app.use(session({
     secret: 'my_safe_chain',
@@ -42,6 +44,9 @@ app.use('/login', login);
 
 var appointment = require('./routers/app');
 app.use('/app', appointment);
+
+var medicines = require('./routers/medicines');
+app.use('/medicines', medicines);
 
 
 const PORT = process.env.PORT || 3000;
