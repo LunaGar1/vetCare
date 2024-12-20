@@ -30,6 +30,27 @@ async function register(req, res){
   
   };
 
+  const reduceStock = async (req, res) => {
+    const { id, newStock } = req.body;
+
+    try {
+        const medicine = await medicineModel.findById(id);
+
+        if (!medicine) {
+            return res.status(404).json({ error: 'Medicine not found' });
+        }
+
+        medicine.stock = newStock;
+        await medicine.save();
+
+        return res.json({ success: true });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
   const getMedicine = async (req, res) => {
     try {
         const medicineId = req.params.id; 
@@ -109,6 +130,7 @@ const getLowStockMedicines = async (req, res) => {
 module.exports = {
     showMedicines,
     register,
+    reduceStock,
     getMedicine,
     editMedicine,
     deleteMedicine,

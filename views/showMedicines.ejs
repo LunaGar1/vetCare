@@ -23,7 +23,7 @@
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                 <li class="nav-item">
-                  <a class="nav-link mx-lg active" aria-current="page" href="#">Home</a>
+                  <a class="nav-link mx-lg"  id="home">Home</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link mx-lg" id="profile">Profile</a>
@@ -32,10 +32,7 @@
                     <a class="nav-link mx-lg" id="users" href="#">Users</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-lg" href="#">Schedule</a>
-                </li>
-                <li class="nav-item">
-                   <a class="nav-link mx-lg" href="#">About</a>
+                    <a class="nav-link mx-lg active" aria-current="page" id="medicines">Medicines</a>
                 </li>
               </ul>
             </div>
@@ -71,6 +68,7 @@
                       <td class="stock1"><%= medicine.stock %>
                       </td>
                       <td>
+                        <a type="button" class="btnReduceStock btn btn-success bi-bag-heart-fill" data-id="<%= medicine._id %>" ></a> 
                           <a type="button" class="btnUpdate btn btn-new bi bi-pencil" ></a> 
                           <a class="btnDelete btn btn-danger bi bi-trash" data-id="<%= medicine._id %>" ></a> 
                       </td>

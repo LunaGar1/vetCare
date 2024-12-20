@@ -1,3 +1,7 @@
+document.getElementById('home').addEventListener('click', function() {
+    window.location.href = '../HTML/landingAdmin.html';
+});
+
 document.getElementById('users').addEventListener('click', function() {
     window.location.href = 'http://localhost:3000/user/showUsers';
 });
@@ -106,6 +110,50 @@ document.getElementById('medicineRegister').addEventListener('submit', async fun
     });
 
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const reduceStockButtons = document.querySelectorAll('.btnReduceStock');
+    
+    reduceStockButtons.forEach(button => {
+        button.addEventListener('click', async function() {
+            const medicineId = button.getAttribute('data-id');
+            const stockElement = button.closest('tr').querySelector('.stock1');
+            let currentStock = parseInt(stockElement.innerHTML);
+
+            if (currentStock > 0) {
+                currentStock--;
+
+                stockElement.innerHTML = currentStock;
+
+                try {
+                    const response = await fetch('/medicines/updateStock', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id: medicineId,
+                            newStock: currentStock
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (result.error) {
+                        alert('Error updating stock: ' + result.error);
+                    } else {
+                        console.log('Stock updated successfully');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Failed to update stock');
+                }
+            } else {
+                alert('Stock is already 0');
+            }
+        });
+    });
+});
+
 
 const updateMedicineModal = new bootstrap.Modal(document.getElementById('updateMedicineModal'));
 
