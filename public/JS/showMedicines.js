@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         alert('Error updating stock: ' + result.error);
                     } else {
                         console.log('Stock updated successfully');
+                        location.reload();
                     }
                 } catch (error) {
                     console.error('Error:', error);
