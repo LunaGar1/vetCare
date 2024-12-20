@@ -230,7 +230,6 @@ document.getElementById('appRegister').addEventListener('submit', async function
                 setTimeout(() => {
                     s.innerHTML = "";
                     p.innerHTML = "";
-                    appModal.hide();
                     location.reload();
                 }, 3000);
                 document.getElementById('appRegister').reset();
@@ -341,7 +340,7 @@ document.querySelector('#tableApp').addEventListener('click', async function (ev
 });
 
 document.querySelector('#appRegisterUpdate').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+    event.preventDefault();
     try {
         const appId = document.querySelector('#idUpdate').value;
         const selectVetsUp = document.getElementById('selectVetsUpdate');

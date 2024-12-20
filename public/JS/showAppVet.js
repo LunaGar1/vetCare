@@ -48,24 +48,14 @@ document.addEventListener("DOMContentLoaded", async () => {
               const appActionCell = document.createElement("td");
               appActionCell.className = "text-end"; 
 
-              const editButton = document.createElement("button");
-              editButton.className = "btnUpdate btn btn-update btn-sm me-2"; 
-              editButton.innerHTML = '<i class="bi bi-pencil"></i>'; 
-              editButton.setAttribute('data-id', apps2._id);
 
               const petProfileButton = document.createElement("button");
               petProfileButton.className = "btnUpdate btn btn-update btn-sm me-2"; 
               petProfileButton.innerHTML = '<i class="bi bi-person-circle"></i>'; 
               petProfileButton.setAttribute('data-id', apps2._id);
                 
-              const deleteButton = document.createElement("button");
-              deleteButton.className = "btnDelete btn btn-danger btn-sm me-2"; 
-              deleteButton.innerHTML = '<i class="bi bi-trash"></i>'; 
-              deleteButton.setAttribute('data-id', apps2._id);
-               
-              appActionCell.appendChild(editButton);
+             
               appActionCell.appendChild(petProfileButton);
-              appActionCell.appendChild(deleteButton);  
 
               appRow.appendChild(petNameCell);
               appRow.appendChild(appDateCell);
