@@ -40,13 +40,14 @@ As a pre-parameter you'll have to install some programs such as:
 4. Use the command "git clone https://github.com/LunaGar1/vetCare.git"
 5. Use the command "cd vetCare"
 6. Use the command "code ."
-7. Use the command on the terminal: "node index.js"
-8. Open MongoDB Compass and click on Connect button
-9. You should be looking at the database "vetCare"
-10.  Click on "users" collection
-11. Click on "ADD DATA" button
-12. Click on "Insert Document"
-13. Enter the following:
+7. Use the command on the project terminal: "npm install bcrypt body-parser cors ejs express express-session mongodb mongoose multer"
+8. Use the command: "node index.js"
+9. Open MongoDB Compass and click on Connect button
+10. You should be looking at the database "vetCare"
+11.  Click on "users" collection
+12. Click on "ADD DATA" button
+13. Click on "Insert Document"
+14. Enter the following:
 ```
     [{
   "_id": {
