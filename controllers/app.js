@@ -63,15 +63,15 @@ const getApp = async (req, res) => {
 const updateApp = async (req, res) => {
   try {
       const appId = req.params.id;
-      const { vetName, petName, datetime, ownerID } = req.body;
+      const { vetName, vetID, petName, datetime, ownerID } = req.body;
 
       const date = await appModel.find({ "datetime": datetime, "vetName": vetName });
-      
+      console.log(date)
       if (date.length > 0) {
         res.status(500).json({ message: 'The appointment is taken at this time' })
       } else {
         const updatedApp = await appModel.findByIdAndUpdate(
-          appId, { vetName, petName, datetime, ownerID }, { new: true, runValidators: true }
+          appId, { vetName, vetID, petName, datetime, ownerID }, { new: true, runValidators: true }
         )
         if (!updatedApp) {
           return res.status(404).json({ message: 'Appointment not found' });

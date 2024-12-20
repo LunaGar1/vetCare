@@ -51,6 +51,8 @@ window.addEventListener('click', function(event) {
 
 const p = document.getElementById("warnings");
 const s = document.getElementById("valid");
+const l = document.getElementById("warnings2");
+const u = document.getElementById("valid2");
 let vets = [];
 let pets = [];
 
@@ -138,7 +140,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
         }).catch(error => {
             console.error('Error', error);
-            p.innerHTML = 'Error procesing your request. Pleasy try again.';
+            l.innerHTML = 'Error procesing your request. Pleasy try again.';
         });
 
         const userId = localStorage.getItem('ownerID');
@@ -165,7 +167,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
         .catch(error => {
             console.error('Error', error);
-            p.innerHTML = 'Error procesing your request. Pleasy try again.';
+            l.innerHTML = 'Error procesing your request. Pleasy try again.';
         });
 
 
@@ -322,12 +324,11 @@ document.querySelector('#tableApp').addEventListener('click', async function (ev
             const appData = await response.json();
             if (response.ok) {
                 document.querySelector('#idUpdate').value = appData._id;
-                document.getElementById('selectVetsUpdate') = selectVetsUp;
-                selectVetsUp.options[selectVetsUp.selectedIndex].textContent = appData.vetName;
+                const selectVetsUp = document.querySelector('#selectVetsUpdate');
                 selectVetsUp.value = appData.vetID;
+                const selectedOptionVet = Array.from(selectVetsUp.options).find(option => option.value === appData.vetID);
                 document.querySelector('#selectPetsUpdate').value = appData.petName;
                 document.querySelector('#datetimeUpdate').value = appData.datetime;
-
                 document.querySelector('#appModalUpdate').style.display = 'block';
             } else {
                 alert('Error fetching appointment data');
@@ -343,17 +344,17 @@ document.querySelector('#appRegisterUpdate').addEventListener('submit', async fu
     event.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
     try {
         const appId = document.querySelector('#idUpdate').value;
-        const selectVets = document.getElementById('selectVetsUpdate');
-        const updatedVetName = selectVets.options[selectVets.selectedIndex].textContent;
-        const updatedVetID = selectVets.value;
+        const selectVetsUp = document.getElementById('selectVetsUpdate');
+        const updatedVetName = selectVetsUp.options[selectVetsUp.selectedIndex].textContent;
+        const updatedVetID = selectVetsUp.value;
         const updatedPetName = document.querySelector('#selectPetsUpdate').value;
         const updatedDate = document.querySelector('#datetimeUpdate').value;
         const ownerID = localStorage.getItem('ownerID');
 
         let warnings  = ""
         let send = false
-        p.innerHTML = ""
-        s.innerHTML = ""
+        l.innerHTML = ""
+        u.innerHTML = ""
 
         if (!updatedVetName || !updatedPetName || !updatedDate){
             warnings+= 'All fields are required <br>';
@@ -361,7 +362,7 @@ document.querySelector('#appRegisterUpdate').addEventListener('submit', async fu
         }
 
         if(send){
-            p.innerHTML = warnings
+            l.innerHTML = warnings
             return;
         }
 
@@ -382,14 +383,14 @@ document.querySelector('#appRegisterUpdate').addEventListener('submit', async fu
         console.log(data.status)
 
         if (data.status == 500) {
-            p.innerHTML = 'This hour is already taken, please choose another one.';
+            l.innerHTML = 'This hour is already taken, please choose another one.';
 
         } else if (data.status == 201) {
-            s.innerHTML = 'Appointment updated successfully';
+            u.innerHTML = 'Appointment updated successfully';
             
             setTimeout(() => {
-                s.innerHTML = "";
-                p.innerHTML = "";
+                u.innerHTML = "";
+                l.innerHTML = "";
             }, 3000);
             document.getElementById('appRegisterUpdate').reset();
         }
