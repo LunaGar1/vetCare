@@ -1,30 +1,19 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-body {
-    background-color: white;
-}
-
 .navbar{
     background-color: #bbb8dd;
     height: 80px;
     margin: 0;
     padding: 0.5rem;
     position: sticky;
-}
-
-.navbar-brand{
+  }
+  
+  .navbar-brand{
     font-weight: 500;
     color: #6766dc;
     font-size: 24px;
     transition: 0.3s color;
-}
-
-.loginButton{
+  }
+  
+  .loginButton{
     background-color: #6766dc;
     color: white;
     font-size: 14px;
@@ -32,32 +21,32 @@ body {
     border-radius: 50px;
     text-decoration: none;
     transition: 0.3s background-color;
-}
-
-.loginButton:hover{
+  }
+  
+  .loginButton:hover{
     background-color: #6766dc;
-}
-
-.navbar-toggler{
+  }
+  
+  .navbar-toggler{
     border: none;
     font-size: 1.25rem;
-}
-
-.navbar-toggler:focus, .btn-close:focus{
+  }
+  
+  .navbar-toggler:focus, .btn-close:focus{
     box-shadow: none;
     outline: none;
-}
-
-.nav-link{
+  }
+  
+  .nav-link{
     color: #666777;
     font-weight: 500;
-}
-
-.nav-link:hover, .nav-link.active{
+  }
+  
+  .nav-link:hover, .nav-link.active{
     color: black;
-}
-
-@media (min-width: 991px){
+  }
+  
+  @media (min-width: 991px){
     .nav-link::before{
         content: "";
         position: absolute;
@@ -75,35 +64,31 @@ body {
         width: 100%;
         visibility: visible;
     }
-}
-
-.btn-new{
-    background-color: #6766dc;
-    color: white;
-}
-
-.btn-new:hover{
-    background-color: #5a58be;
-    color: white;
-}
-
-.btnUpdate{
-    background-color: #6766dc;
-    color: white;
-  }
-
-  .btnUpdate:hover{
-    background-color: #5a58be;
-    color: white;
   }
   
+  body {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .container {
+      width: 80%;
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  
+    .btn-new{
+      background-color: #6766dc;
+      color: white;
+    }
+  
+    .btn-new:hover{
+      background-color: #5a58be;
+      color: white;
+    }
 
-.headline{
-    margin: 2%;
-    color: #6766dc;
-}
-
-.required-asterisk {
-    color: red;
-    margin-left: 2px;
-}

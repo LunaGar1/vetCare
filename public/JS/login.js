@@ -55,6 +55,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 
             } else if (data.Role === 'Vet'){
                 window.location.href = 'http://localhost:3000/HTML/landingVet.html'
+                localStorage.setItem('vetID', data.ID);
     
             } else if (data.Role === 'Pet owner'){
                 window.location.href = 'http://localhost:3000/HTML/landingOwner.html'

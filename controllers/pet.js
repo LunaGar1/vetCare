@@ -25,6 +25,22 @@ async function getPetsByOwner(req, res) {
   }
 };
 
+const renderProfile = async (req, res) => {
+  if (!req.session.userId) {
+      return res.redirect('../HTML/login.html');
+  }
+
+  try {
+      const pet = await petModel.findById(petId);
+      if (!pet) {
+          return res.status(404).send('User no found');
+      }
+      res.render('petProfile', { pet });
+  } catch (err) {
+      res.status(500).send('Error searching for pet');
+  }
+};
+
 
 const getPet = async (req, res) => {
   try {
@@ -85,6 +101,7 @@ const deletePet = async (req, res) => {
 
 module.exports = {
     register,
+    renderProfile,
     getPetsByOwner,
     getPet,
     updatePet,
