@@ -20,6 +20,8 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
+
+
 //******* ROUTERS******* */
 app.use(session({
     secret: 'my_safe_chain',
