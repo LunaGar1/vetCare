@@ -47,7 +47,7 @@ As a pre-parameter you'll have to install some programs such as:
 11. Click on "ADD DATA" button
 12. Click on "Insert Document"
 13. Enter the following:
-    ```
+```
     [{
   "_id": {
     "$oid": "672d6f0057271f85872fe35e"
@@ -87,7 +87,8 @@ As a pre-parameter you'll have to install some programs such as:
   "hashedPassword": "$2b$10$SvrQpou/.fY04knPOvOJb.hUHZmSHflDX5xJVRMZl89mGHDx9..3i",
   "__v": 0
 }]
-    ``` 
+```
+
 
 And enter on "Insert" button
 
