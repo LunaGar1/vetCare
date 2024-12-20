@@ -46,6 +46,9 @@ app.use('/login', login);
 var appointment = require('./routers/app');
 app.use('/app', appointment);
 
+var medicines = require('./routers/medicines');
+app.use('/medicines', medicines);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

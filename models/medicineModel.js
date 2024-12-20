@@ -6,4 +6,4 @@ const medicineSchema = new mongoose.Schema({
     stock: { type: Number, required: true }
 });
 
-module.exports = mongoose.model('Medicine', productSchema)
+module.exports = mongoose.model('Medicine', medicineSchema)
