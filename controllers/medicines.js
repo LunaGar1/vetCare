@@ -77,8 +77,6 @@ const editMedicine = async (req, res) => {
   }
 };
 
-
-
 const deleteMedicine = async (req, res) => {
   try {
     const id = req.params.id;
@@ -95,7 +93,16 @@ const deleteMedicine = async (req, res) => {
   }
 };
 
-
+const getLowStockMedicines = async (req, res) => {
+  try {
+      const medicines = await medicineModel.find({ stock: { $lte: 5 } });
+      res.status(200).json(medicines);
+      console.log(medicines); 
+  } catch (error) {
+      console.error('Error fetching low-stock medicines:', error);
+      res.status(500).json({ error: 'Error fetching low-stock medicines' });
+  }
+};
 
 
 
@@ -104,5 +111,6 @@ module.exports = {
     register,
     getMedicine,
     editMedicine,
-    deleteMedicine
+    deleteMedicine,
+    getLowStockMedicines
 }

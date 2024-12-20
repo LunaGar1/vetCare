@@ -215,8 +215,6 @@ document.getElementById('updateMedicineForm').addEventListener('submit', async f
 });
 
 
-
-
 document.querySelector('#tableMedicines').addEventListener('click', async function (event) {
     if (event.target.closest('.btnDelete')) { 
         const deleteButton = event.target.closest('.btnDelete');
@@ -242,3 +240,37 @@ document.querySelector('#tableMedicines').addEventListener('click', async functi
         }
     }
 });
+
+async function fetchLowStockMedicines() {
+    try {
+        const response = await fetch('/medicines/lowStock');
+        const medicines = await response.json();
+        displayLowStockAlert(medicines);
+    } catch (error) {
+        console.error('Error fetching low-stock medicines:', error);
+    }
+}
+
+function displayLowStockAlert(medicines) {
+    const alertContainer = document.getElementById('lowStockAlert');
+    alertContainer.innerHTML = '';
+
+    if (medicines.length > 0) {
+        medicines.forEach(medicine => {
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-warning';
+            alert.innerHTML = `
+                <strong>Low Stock!</strong> ${medicine.name} only has ${medicine.stock} left.
+            `;
+            alertContainer.appendChild(alert);
+        });
+    } else {
+        alertContainer.innerHTML = `
+            <div class="alert alert-success">
+                <strong>Good!</strong> All medicines have sufficient stock.
+            </div>
+        `;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', fetchLowStockMedicines);

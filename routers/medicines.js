@@ -13,6 +13,9 @@ router.post('/editMedicine', Controller.editMedicine);
 
 router.delete('/deleteMedicine/:id', Controller.deleteMedicine);
 
+router.get('/lowStock', Controller.getLowStockMedicines);
+
+
 
 
 
