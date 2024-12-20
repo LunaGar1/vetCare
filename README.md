@@ -94,7 +94,7 @@ And enter on "Insert" button
 
 14. Go to visual again and use the command on the terminal: "node index.js"
 15. Open the browser and search the browser and look for the addres "http://localhost:3000/HTML/login.html"
-16. You can login with any of the users you saved in the "users" collection of MongoDB
+16. You can login with any of the users you saved in the "users" collection of MongoDB, everyone has a diferent role
 
 ## Process
 Our website was created in about 2 months, we use git as our version control software. We work separately and in different branches dividing our work equally. Overall, it was a great process, we learned a lot.
