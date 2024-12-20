@@ -34,7 +34,21 @@ async function register(req, res){
 
 
 
-
+  const deleteMedicine = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const result = await medicineModel.findByIdAndDelete(id);
+  
+      if (!result) {
+        return res.status(404).json({ message: 'Medicine not found' });
+      }
+  
+      res.status(200).json({ message: 'Medicine deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error deleting medicine', error: error.message });
+    }
+  };
 
 
 
@@ -42,5 +56,6 @@ async function register(req, res){
 
 module.exports = {
     showMedicines,
-    register
+    register,
+    deleteMedicine
 }

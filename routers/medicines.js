@@ -7,6 +7,8 @@ router.get('/showMedicines', Controller.showMedicines);
 
 router.post('/register', Controller.register);
 
+router.delete('/deleteMedicine/:id', Controller.deleteMedicine);
+
 
 
 

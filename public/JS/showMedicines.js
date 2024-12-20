@@ -107,3 +107,32 @@ document.getElementById('medicineRegister').addEventListener('submit', async fun
 
 });
 
+
+
+
+
+document.querySelector('#tableMedicines').addEventListener('click', async function (event) {
+    if (event.target.closest('.btnDelete')) { 
+        const deleteButton = event.target.closest('.btnDelete');
+        const medicineId = deleteButton.getAttribute('data-id');
+
+        if (confirm('Are you sure you want to delete this medicine?')) {
+            try {
+                const response = await fetch(`/medicines/deleteMedicine/${medicineId}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+                if (!data.error) {
+                    alert('Product deleted successfully');
+                    location.reload();
+                } else {
+                    alert(data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting product. Please try again.');
+            }
+        }
+    }
+});
