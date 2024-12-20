@@ -29,6 +29,7 @@ document.getElementById('logout').addEventListener('click', function() {
 
 openModalBtn.addEventListener('click', function() {
     appModal.style.display = 'block'; 
+    appModal.style.display = 'block'; 
 });
 
 
@@ -227,6 +228,8 @@ document.getElementById('appRegister').addEventListener('submit', async function
                 setTimeout(() => {
                     s.innerHTML = "";
                     p.innerHTML = "";
+                    appModal.hide();
+                    location.reload();
                 }, 3000);
                 document.getElementById('appRegister').reset();
             }

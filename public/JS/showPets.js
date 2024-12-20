@@ -186,6 +186,7 @@ document.getElementById('petRegister').addEventListener('submit', async function
             setTimeout(() => {
                 s.innerHTML = "";
                 p.innerHTML = "";
+                petModal.hide();
                 location.reload();
             }, 3000);
             document.getElementById('petRegister').reset();

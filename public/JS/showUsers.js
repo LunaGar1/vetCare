@@ -12,15 +12,6 @@ document.getElementById('logout').addEventListener('click', function() {
     window.location.href = '../HTML/login.html';
 });
 
-
-
-
-document.getElementById('btnNewUser').addEventListener('click', function() {
-    window.location.href = '../HTML/userRegister.html';
-});
-
-const modalUsers = new bootstrap.Modal(document.getElementById('modalUsers'));
-
 const on = (element, event, selector, handler) => {
     element.addEventListener(event, e => { 
         if (e.target.closest(selector)) {
@@ -30,7 +21,120 @@ const on = (element, event, selector, handler) => {
 };
 
 
+const modalRegisterUsers = new bootstrap.Modal(document.getElementById('modalRegisterUsers'));
+
+ on(document, 'click', '.btnNewUser', e => {
+    modalRegisterUsers.show();
+});
+
+
+document.getElementById('userRegister').addEventListener('submit', async function(event) {
+    
+    event.preventDefault(); 
+
+    const names = document.getElementById('names').value;
+    const lastNames = document.getElementById('lastNames').value;
+    const typeID = document.getElementById('typeID').value;
+    const ID = document.getElementById('ID').value;
+    const Role = document.getElementById('Role').value;
+    const user = document.getElementById('user').value;
+    const password = document.getElementById('password').value;
+
+    const p=document.getElementById("warnings");
+    const s=document.getElementById("valid");
+
+    let warnings = ""
+    let send=false
+    p.innerHTML = ""
+
+    if(!names || !lastNames || !typeID || !ID || !Role || !user || !password ){
+        warnings+='All fields are required <br>';
+        send=true
+    }else{
+    
+        if(names.length < 3 || names.length > 20){
+            warnings+='The name must contain between 3 and 20 characters <br>';
+            send=true
+        }
+        if(lastNames.length < 3 || lastNames.length > 20){
+            warnings+='The last names must contain between 3 and 20 characters <br>';
+            send=true
+        }
+    
+        const regexID = /^\d+$/;
+    
+        if (!regexID.test(ID) || ID.length < 8 || ID.length > 12) {
+            warnings+='The ID must be only numbers and contain between 8 and 12 digits <br>';
+            send=true
+        }
+        
+        let regexUsername = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    
+        if (!regexUsername.test(user)) {
+            warnings+='The username must be an email address <br>';
+            send=true
+        }
+    
+        if(password.length < 12){
+            warnings+='The password must contain 12 characters <br>';
+            send=true
+        }
+    
+    
+    }
+
+    if(send){
+        p.innerHTML =warnings
+        return;
+    }
+
+    await fetch('/user/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            names,
+            lastNames,
+            typeID,
+            ID,
+            Role,
+            user,
+            password
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.error) {
+            s.innerHTML = data.message;
+
+            setTimeout(() => {
+                s.innerHTML = ""; 
+                p.innerHTML = ""; 
+                modalUpdateUsers.hide();
+                location.reload();
+            }, 3000);
+            document.getElementById('userRegister').reset();
+        } else {
+            p.innerHTML = data.error; 
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        p.innerHTML = 'Error processing your request. Please try again.';
+    });
+
+});
+
+
+const modalUpdateUsers = new bootstrap.Modal(document.getElementById('modalUpdateUsers'));
+
+
+    
+
+
 on(document, 'click', '.btnUpdate', async e => {
+
     try{
         const row = e.target.closest('tr');
         const ID = row.children[0].innerHTML.trim();
@@ -54,15 +158,14 @@ on(document, 'click', '.btnUpdate', async e => {
         userUpdate.value = userData.user;
 
 
-        modalUsers.show();
+        modalUpdateUsers.show();
     } catch (error) {
         console.error('Error fetching user data:', error);
     }
     
 });
 
-const p=document.getElementById("warnings");
-const s=document.getElementById("valid");
+
 
 document.getElementById('updateUserForm').addEventListener('submit', async function (event) {
 
@@ -75,6 +178,9 @@ document.getElementById('updateUserForm').addEventListener('submit', async funct
     const RoleUpdate = document.getElementById('RoleUpdate').value;
     const userUpdate = document.getElementById('userUpdate').value;
     const passwordUpdate = document.getElementById('passwordUpdate').value;
+
+    const p=document.getElementById("warnings2");
+    const s=document.getElementById("valid2");
 
     let warnings = ""
     let send=false
@@ -143,7 +249,7 @@ document.getElementById('updateUserForm').addEventListener('submit', async funct
             setTimeout(() => {
                 s.innerHTML = ""; 
                 p.innerHTML = ""; 
-                modalUsers.hide();
+                modalUpdateUsers.hide();
                 location.reload();
             }, 3000);
             
