@@ -30,25 +30,70 @@ async function register(req, res){
   
   };
 
-
-
-
-
-  const deleteMedicine = async (req, res) => {
+  const getMedicine = async (req, res) => {
     try {
-      const id = req.params.id;
-      const result = await medicineModel.findByIdAndDelete(id);
-  
-      if (!result) {
-        return res.status(404).json({ message: 'Medicine not found' });
-      }
-  
-      res.status(200).json({ message: 'Medicine deleted successfully' });
+        const medicineId = req.params.id; 
+        const medicine = await medicineModel.findById(medicineId); 
+
+        if (!medicine) {
+            return res.status(404).send('Medicine not found');
+        }
+
+        res.json(medicine); 
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error deleting medicine', error: error.message });
+        console.error(error);
+        res.status(500).send('Error fetching medicine');
     }
-  };
+};
+
+const editMedicine = async (req, res) => {
+  const { idUpdate, nameUpdate, priceUpdate, stockUpdate } = req.body;
+
+  try {
+  
+      const medicine = await medicineModel.findById(idUpdate);
+      if (!medicine) {
+          return res.status(404).json({ error: 'Medicine not found' });
+      }
+
+      medicine.name = nameUpdate;
+      medicine.price = priceUpdate;
+      medicine.stock = stockUpdate;
+
+      const lowStockMedicines = await medicineModel.find({ stock: { $lte: 5 } });
+      await medicine.save(); 
+      ;
+
+      return res.status(200).json({
+          message: 'Medicine updated successfully',
+          lowStockMedicines,
+      });
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+          error: 'Error updating medicine',
+          message: error.message
+      });
+  }
+};
+
+
+
+const deleteMedicine = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await medicineModel.findByIdAndDelete(id);
+
+    if (!result) {
+      return res.status(404).json({ message: 'Medicine not found' });
+    }
+
+    res.status(200).json({ message: 'Medicine deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error deleting medicine', error: error.message });
+  }
+};
 
 
 
@@ -57,5 +102,7 @@ async function register(req, res){
 module.exports = {
     showMedicines,
     register,
+    getMedicine,
+    editMedicine,
     deleteMedicine
 }

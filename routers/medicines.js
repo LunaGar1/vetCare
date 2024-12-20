@@ -7,6 +7,10 @@ router.get('/showMedicines', Controller.showMedicines);
 
 router.post('/register', Controller.register);
 
+router.get('/getMedicine/:id', Controller.getMedicine);
+
+router.post('/editMedicine', Controller.editMedicine); 
+
 router.delete('/deleteMedicine/:id', Controller.deleteMedicine);
 
 
