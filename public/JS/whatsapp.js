@@ -1,7 +1,14 @@
-// whatsapp.js
 window.onload = function() {
     var btn = document.createElement('a');
-    btn.href = 'https://wa.me/+573508523401';
+ 
+    var phoneNumber = '573508523401'; 
+    var message = 'Hello, I want to communicate with the VetCare team.';
+    
+    var encodedMessage = encodeURIComponent(message);
+
+    console.log('Mensaje codificado:', encodedMessage);
+ 
+    btn.href = 'https://wa.me/' + phoneNumber + '?text=' + encodedMessage;
     btn.classList.add('whatsapp-btn');
     btn.target = '_blank';
 
@@ -14,7 +21,7 @@ window.onload = function() {
     btn.style.right = '20px';
     btn.style.backgroundColor = '#25D366';
     btn.style.borderRadius = '50%';
-    btn.style.padding = '15px';
+    btn.style.padding = '20px';  
     btn.style.boxShadow = '0px 4px 10px rgba(0, 0, 0, 0.3)';
     btn.style.color = 'white';
     btn.style.fontSize = '24px';
