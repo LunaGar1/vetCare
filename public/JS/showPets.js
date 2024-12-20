@@ -71,8 +71,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 petAgeCell.textContent = await pet2.age;
 
 
-                const petActionCell = document.createElement("td");
-                petActionCell.className = "text-end"; 
+                // const petActionCell = document.createElement("td");
+                // petActionCell.className = "text-end"; 
         
                 const editButton = document.createElement("button");
                 editButton.className = "btnUpdate btn btn-primary btn-sm me-2"; 
