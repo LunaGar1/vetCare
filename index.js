@@ -9,6 +9,8 @@ const session = require('express-session');
 const multer = require('multer');
 const path = require('path');
 
+require('dotenv').config();
+
 const app = express();
 
 connectDB();

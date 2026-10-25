@@ -1,14 +1,17 @@
+
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/vetcare', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('Conection to MongoDB established');
+    const mongoURI =
+      process.env.MONGODB_URI ||
+      'mongodb://localhost:27017/vetcare';
+
+    await mongoose.connect(mongoURI);
+
+    console.log('Conexión a MongoDB establecida');
   } catch (error) {
-    console.error('Error conecting MongoDB:', error);
+    console.error('Error conectando a MongoDB:', error.message);
     process.exit(1);
   }
 };
