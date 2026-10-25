@@ -182,6 +182,10 @@ const editUser = async (req, res) => {
   try {
     const user = await userModel.findOne({ ID: IDupdate });
 
+    console.log('Base de datos:', userModel.db.name);
+    console.log('ID recibido:', IDupdate);
+    console.log('Datos recibidos:', req.body);
+
     if (!user) {
       return res.status(404).json({
         error: 'User not found'
@@ -218,7 +222,7 @@ const editUser = async (req, res) => {
         message: 'User updated successfully'
       });
     } else {
-      await userModel.findOneAndUpdate(
+      const updatedUser = await userModel.findOneAndUpdate(
         { ID: IDupdate },
         {
           ID: IDupdate,
@@ -226,10 +230,12 @@ const editUser = async (req, res) => {
           lastNames: lastNamesUpdate,
           typeID: typeIDupdate,
           Role: RoleUpdate,
-          username: userUpdate
+          user: userUpdate
         },
         { new: true }
       );
+      
+      console.log('Usuario actualizado:', updatedUser);
 
       return res.status(200).json({
         message: 'User updated successfully'

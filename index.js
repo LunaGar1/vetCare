@@ -5,7 +5,6 @@ const User = require('./models/userModel');
 const Pet = require('./models/petModel');
 const App = require('./models/appModel');
 const cors = require('cors');
-const session = require('express-session');
 const multer = require('multer');
 const path = require('path');
 
@@ -22,14 +21,23 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
+const session = require('express-session');
 
+if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+}
 
-//******* ROUTERS******* */
 app.use(session({
-    secret: 'my_safe_chain',
+    secret: process.env.SESSION_SECRET || 'my_safe_chain',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax'
+    }
 }));
+
 
 // Configuración de EJS
 app.set('views', path.join(__dirname, 'views'));
@@ -51,5 +59,11 @@ var medicines = require('./routers/medicines');
 app.use('/medicines', medicines);
 
 
+
+
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
