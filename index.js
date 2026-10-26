@@ -43,6 +43,10 @@ app.use(session({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.get('/', (req, res) => {
+    res.redirect('/login');
+});
+
 var user = require('./routers/user');
 app.use('/user', user)
 
