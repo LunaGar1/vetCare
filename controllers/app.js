@@ -2,22 +2,49 @@ const appModel = require('../models/appModel');
 
 async function register(req, res) {
     try {
-      const { vetName, vetID, petName, datetime, ownerID} = req.body;
+        const { vetName, vetID, petName, datetime, ownerID } = req.body;
 
-      const date = await appModel.find({ "datetime": datetime, "vetName": vetName });
-      
-      if (date.length > 0) {
-        res.status(500).json({ message: 'The appointment is taken at this time' })
-      } else {
-        const newApp = new appModel({ vetName, vetID, petName, datetime, ownerID});
+        const appointmentDate = new Date(datetime);
+
+        if (isNaN(appointmentDate.getTime())) {
+            return res.status(400).json({
+                message: 'Invalid appointment date'
+            });
+        }
+
+        const existingApp = await appModel.findOne({
+            vetID: vetID,
+            datetime: appointmentDate
+        });
+
+        if (existingApp) {
+            return res.status(409).json({
+                message: 'The appointment is taken at this time'
+            });
+        }
+
+        const newApp = new appModel({
+            vetName,
+            vetID,
+            petName,
+            datetime: appointmentDate,
+            ownerID
+        });
+
         await newApp.save();
-        res.status(201).json({ message: 'Successfully scheduled appointment' });
-      }
+
+        return res.status(201).json({
+            message: 'Successfully scheduled appointment'
+        });
+
     } catch (error) {
-      res.status(500).json({ message: 'Error to schedule appointment', error });
-      
+        console.error('Error scheduling appointment:', error);
+
+        return res.status(500).json({
+            message: 'Error to schedule appointment',
+            error: error.message
+        });
     }
-  
 }
 
 async function getAppsByOwner(req, res) {
@@ -61,27 +88,64 @@ const getApp = async (req, res) => {
 };
 
 const updateApp = async (req, res) => {
-  try {
-      const appId = req.params.id;
-      const { vetName, vetID, petName, datetime, ownerID } = req.body;
+    try {
+        const appId = req.params.id;
+        const { vetName, vetID, petName, datetime, ownerID } = req.body;
 
-      const date = await appModel.find({ "datetime": datetime, "vetName": vetName });
-      console.log(date)
-      if (date.length > 0) {
-        res.status(500).json({ message: 'The appointment is taken at this time' })
-      } else {
-        const updatedApp = await appModel.findByIdAndUpdate(
-          appId, { vetName, vetID, petName, datetime, ownerID }, { new: true, runValidators: true }
-        )
-        if (!updatedApp) {
-          return res.status(404).json({ message: 'Appointment not found' });
+        const appointmentDate = new Date(datetime);
+
+        if (isNaN(appointmentDate.getTime())) {
+            return res.status(400).json({
+                message: 'Invalid appointment date'
+            });
         }
-        return res.status(200).json({ message: 'Appointment updated successfully', app: updatedApp });
-      }    
-  } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Error updating appointment', error: error.message });
-  }
+
+        const existingApp = await appModel.findOne({
+            vetID: vetID,
+            datetime: appointmentDate,
+            _id: { $ne: appId }
+        });
+
+        if (existingApp) {
+            return res.status(409).json({
+                message: 'The appointment is taken at this time'
+            });
+        }
+
+        const updatedApp = await appModel.findByIdAndUpdate(
+            appId,
+            {
+                vetName,
+                vetID,
+                petName,
+                datetime: appointmentDate,
+                ownerID
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
+        if (!updatedApp) {
+            return res.status(404).json({
+                message: 'Appointment not found'
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Appointment updated successfully',
+            app: updatedApp
+        });
+
+    } catch (error) {
+        console.error('Error updating appointment:', error);
+
+        return res.status(500).json({
+            message: 'Error updating appointment',
+            error: error.message
+        });
+    }
 };
 
 const deleteApp = async (req, res) => {

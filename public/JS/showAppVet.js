@@ -3,7 +3,7 @@ document.getElementById('home').addEventListener('click', function() {
 });
 
 document.getElementById('profile').addEventListener('click', function() {
-    window.location.href = 'http://localhost:3000/user/profile';
+    window.location.href = '/user/profile';
 });
 
 document.getElementById('logout').addEventListener('click', function() {
@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", async () => {
               const appDateCell = document.createElement('td');
               appDateCell.textContent = await apps2.datetime;   
         
-              const appActionCell = document.createElement("td");
-              appActionCell.className = "text-end"; 
+              //const appActionCell = document.createElement("td");
+              //appActionCell.className = "text-end"; 
 
 
               const petProfileButton = document.createElement("button");
@@ -54,12 +54,9 @@ document.addEventListener("DOMContentLoaded", async () => {
               petProfileButton.innerHTML = '<i class="bi bi-person-circle"></i>'; 
               petProfileButton.setAttribute('data-id', apps2._id);
                 
-             
-              appActionCell.appendChild(petProfileButton);
 
               appRow.appendChild(petNameCell);
               appRow.appendChild(appDateCell);
-              appRow.appendChild(appActionCell);
         
               appsTableBody.appendChild(appRow);
             });

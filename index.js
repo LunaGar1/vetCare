@@ -1,68 +1,87 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const connectDB = require('./db');
-const User = require('./models/userModel');
-const Pet = require('./models/petModel');
-const App = require('./models/appModel');
-const cors = require('cors');
-const multer = require('multer');
 const path = require('path');
+const session = require('express-session');
+const MongoStore = require('connect-mongo').MongoStore;
 
-require('dotenv').config();
+console.log('MongoStore:', MongoStore);
+console.log('Tipo de MongoStore:', typeof MongoStore);
+console.log('Tipo de create:', typeof MongoStore.create);
 
 const app = express();
 
-connectDB();
+// Validar variables de entorno
+if (!process.env.SESSION_SECRET) {
+    throw new Error('SESSION_SECRET is not configured');
+}
 
-app.use(cors());
+if (!process.env.MONGODB_URI) {
+    throw new Error('MONGODB_URI is not configured');
+}
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-app.use(express.static('public'));
-
-const session = require('express-session');
-
+// Configuración de Render
 if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1);
 }
 
+// Conectar MongoDB
+connectDB();
+
+// Middlewares generales
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static('public'));
+
+// Configuración de sesiones
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'my_safe_chain',
+    name: 'vetcare.sid',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+        collectionName: 'sessions',
+        ttl: 24 * 60 * 60
+    }),
+
     cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax'
+        sameSite: 'lax',
+        maxAge: 24 * 60 * 60 * 1000
     }
 }));
-
 
 // Configuración de EJS
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Ruta principal
 app.get('/', (req, res) => {
     res.redirect('/login');
 });
 
-var user = require('./routers/user');
-app.use('/user', user)
+// Rutas
+const user = require('./routers/user');
+app.use('/user', user);
 
-var pet = require('./routers/pet');
-app.use('/pet', pet)
+const pet = require('./routers/pet');
+app.use('/pet', pet);
 
-var login = require('./routers/login');
+const login = require('./routers/login');
 app.use('/login', login);
 
-var appointment = require('./routers/app');
+const appointment = require('./routers/app');
 app.use('/app', appointment);
 
-var medicines = require('./routers/medicines');
+const medicines = require('./routers/medicines');
 app.use('/medicines', medicines);
 
-
+// Iniciar servidor
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

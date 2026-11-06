@@ -3,11 +3,11 @@ document.getElementById('home').addEventListener('click', function() {
 });
 
 document.getElementById('users').addEventListener('click', function() {
-    window.location.href = 'http://localhost:3000/user/showUsers';
+    window.location.href = '/user/showUsers';
 });
 
 document.getElementById('profile').addEventListener('click', function() {
-    window.location.href = 'http://localhost:3000/user/profile';
+    window.location.href = '/user/profile';
 });
 
 document.getElementById('logout').addEventListener('click', function() {

@@ -1,15 +1,13 @@
-const openModalBtn = document.getElementById('newApp'); 
-const appModal = document.getElementById('appModal'); 
-const cancelButton = document.getElementById('cancelButton'); 
-const closeButton = document.querySelector('.close'); 
-const appModalUpdate = document.getElementById('appModalUpdate'); 
+const openModalBtn = document.getElementById('newApp');
+const appModal = document.getElementById('appModal');
+const appModalUpdate = document.getElementById('appModalUpdate');
 
 document.getElementById('home').addEventListener('click', function() {
     window.location.href = '../HTML/landingOwner.html';
 });
 
 document.getElementById('profile').addEventListener('click', function() {
-    window.location.href = 'http://localhost:3000/user/profile';
+    window.location.href = '/user/profile';
 });
 
 document.getElementById('Users').addEventListener('click', function() {
@@ -27,186 +25,219 @@ document.getElementById('logout').addEventListener('click', function() {
 });
 
 
+function formatDateTimeLocal(dateValue) {
+    const date = new Date(dateValue);
+
+    if (isNaN(date.getTime())) {
+        return '';
+    }
+
+    const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Bogota',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hourCycle: 'h23'
+    }).formatToParts(date);
+
+    const getPart = (type) => parts.find(part => part.type === type).value;
+
+    return `${getPart('year')}-${getPart('month')}-${getPart('day')}T${getPart('hour')}:${getPart('minute')}`;
+}
+
+
+function formatDateTimeColombia(dateValue) {
+    const date = new Date(dateValue);
+
+    if (isNaN(date.getTime())) {
+        return 'Invalid date';
+    }
+
+    return date.toLocaleString('es-CO', {
+        timeZone: 'America/Bogota',
+        dateStyle: 'short',
+        timeStyle: 'short'
+    });
+}
+
+
+document.querySelectorAll('.cancelButton').forEach(button => {
+    button.addEventListener('click', function() {
+        const modal = this.closest('.modal');
+        modal.style.display = 'none';
+    });
+});
+
+
 openModalBtn.addEventListener('click', function() {
-    appModal.style.display = 'block'; 
-    appModal.style.display = 'block'; 
+    appModal.style.display = 'block';
 });
 
-
-cancelButton.addEventListener('click', function() {
-    appModal.style.display = 'none'; 
-});
 
 window.addEventListener('click', function(event) {
     if (event.target === appModal) {
         appModal.style.display = 'none';
     }
-});
 
-window.addEventListener('click', function(event) {
     if (event.target === appModalUpdate) {
         appModalUpdate.style.display = 'none';
     }
 });
 
+
 const p = document.getElementById("warnings");
 const s = document.getElementById("valid");
 const l = document.getElementById("warnings2");
 const u = document.getElementById("valid2");
+
 let vets = [];
 let pets = [];
 
-document.addEventListener("DOMContentLoaded", async () => {
 
+document.addEventListener("DOMContentLoaded", async () => {
     try {
-        await fetch('/user/getAllVets', {
+        const vetsResponse = await fetch('/user/getAllVets', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(async data => {
-            vetsJson = await data.json();
-            console.log(vetsJson)
-            vets = vetsJson;
-
-            const selectElement = document.getElementById('selectVets');
-
-            vets.forEach(function(opcion) {
-                const option = document.createElement('option');
-                option.value = opcion.ID;  
-                option.textContent = opcion.names;  
-                selectElement.appendChild(option);  
-            });
-        }).catch(error => {
-            console.error('Error', error);
-            p.innerHTML = 'Error procesing your request. Pleasy try again.';
         });
+
+        if (!vetsResponse.ok) {
+            throw new Error('Error loading veterinarians');
+        }
+
+        vets = await vetsResponse.json();
+
+        const selectElement = document.getElementById('selectVets');
+
+        vets.forEach(function(opcion) {
+            const option = document.createElement('option');
+            option.value = opcion.ID;
+            option.textContent = opcion.names;
+            selectElement.appendChild(option);
+        });
+
 
         const userId = localStorage.getItem('ownerID');
 
-        await fetch(`/pet/pets?ownerId=${userId}`, {
+        const petsResponse = await fetch(`/pet/pets?ownerId=${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(async data => {
-            petsJson = await data.json();
-            console.log(petsJson)
-            pets = petsJson;
-
-            const selectElement = document.getElementById('selectPets');
-
-        
-            pets.forEach(function(opcion) {
-                const option = document.createElement('option');
-                option.value = opcion.name;  
-                option.textContent = opcion.name;  
-                selectElement.appendChild(option);  
-            });
-        })
-        .catch(error => {
-            console.error('Error', error);
-            p.innerHTML = 'Error procesing your request. Pleasy try again.';
         });
 
+        if (!petsResponse.ok) {
+            throw new Error('Error loading pets');
+        }
 
+        pets = await petsResponse.json();
+
+        const selectPets = document.getElementById('selectPets');
+
+        pets.forEach(function(opcion) {
+            const option = document.createElement('option');
+            option.value = opcion.name;
+            option.textContent = opcion.name;
+            selectPets.appendChild(option);
+        });
 
     } catch (error) {
-        console.log('error carga datos', error);
+        console.error('Error loading registration data:', error);
+        p.innerHTML = 'Error processing your request. Please try again.';
     }
- 
 });
 
-document.addEventListener("DOMContentLoaded", async () => {
 
+document.addEventListener("DOMContentLoaded", async () => {
     try {
-        await fetch('/user/getAllVets', {
+        const vetsResponse = await fetch('/user/getAllVets', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(async data => {
-            vetsJson = await data.json();
-            console.log(vetsJson)
-            vets = vetsJson;
-
-            const selectElement = document.getElementById('selectVetsUpdate');
-
-            vets.forEach(function(opcion) {
-                const option = document.createElement('option');
-                option.value = opcion.ID;  
-                option.textContent = opcion.names;  
-                selectElement.appendChild(option);  
-            });
-        }).catch(error => {
-            console.error('Error', error);
-            l.innerHTML = 'Error procesing your request. Pleasy try again.';
         });
+
+        if (!vetsResponse.ok) {
+            throw new Error('Error loading veterinarians');
+        }
+
+        vets = await vetsResponse.json();
+
+        const selectElement = document.getElementById('selectVetsUpdate');
+
+        vets.forEach(function(opcion) {
+            const option = document.createElement('option');
+            option.value = opcion.ID;
+            option.textContent = opcion.names;
+            selectElement.appendChild(option);
+        });
+
 
         const userId = localStorage.getItem('ownerID');
 
-        await fetch(`/pet/pets?ownerId=${userId}`, {
+        const petsResponse = await fetch(`/pet/pets?ownerId=${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(async data => {
-            petsJson = await data.json();
-            console.log(petsJson)
-            pets = petsJson;
-
-            const selectElement = document.getElementById('selectPetsUpdate');
-
-        
-            pets.forEach(function(opcion) {
-                const option = document.createElement('option');
-                option.value = opcion.name;  
-                option.textContent = opcion.name;  
-                selectElement.appendChild(option);  
-            });
-        })
-        .catch(error => {
-            console.error('Error', error);
-            l.innerHTML = 'Error procesing your request. Pleasy try again.';
         });
 
+        if (!petsResponse.ok) {
+            throw new Error('Error loading pets');
+        }
 
+        pets = await petsResponse.json();
+
+        const selectPets = document.getElementById('selectPetsUpdate');
+
+        pets.forEach(function(opcion) {
+            const option = document.createElement('option');
+            option.value = opcion.name;
+            option.textContent = opcion.name;
+            selectPets.appendChild(option);
+        });
 
     } catch (error) {
-        console.log('error carga datos', error);
+        console.error('Error loading update data:', error);
+        l.innerHTML = 'Error processing your request. Please try again.';
     }
-
 });
+
 
 document.getElementById('appRegister').addEventListener('submit', async function(event) {
-    
-    event.preventDefault(); 
+    event.preventDefault();
 
     try {
         const selectVets = document.getElementById('selectVets');
+
         const vetName = selectVets.options[selectVets.selectedIndex].textContent;
         const vetID = selectVets.value;
+
         const petName = document.getElementById('selectPets').value;
         const datetime = document.getElementById('datetime').value;
+
         const ownerID = localStorage.getItem('ownerID');
 
-    
-        let warnings  = ""
-        let send = false
-        p.innerHTML = ""
-        s.innerHTML = ""
-    
-        if (!vetName || !petName || !datetime){
-            warnings+= 'All fields are required <br>';
-            send = true
-        }
+        p.innerHTML = '';
+        s.innerHTML = '';
 
-        if(send){
-            p.innerHTML = warnings
+        if (!vetID || !petName || !datetime) {
+            p.innerHTML = 'All fields are required';
             return;
         }
 
-        await fetch('/app/register', {
+        const appointmentDate = new Date(datetime);
+
+        if (isNaN(appointmentDate.getTime())) {
+            p.innerHTML = 'Please enter a valid date and time.';
+            return;
+        }
+
+        const response = await fetch('/app/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -215,103 +246,104 @@ document.getElementById('appRegister').addEventListener('submit', async function
                 vetName: vetName,
                 vetID: vetID,
                 petName: petName,
-                datetime: datetime,
-                ownerID: ownerID,
+                datetime: appointmentDate.toISOString(),
+                ownerID: ownerID
             })
-        }).then(async data => {
-            console.log(data.status)
-
-            if (data.status == 500) {
-                p.innerHTML = 'This hour is already taken, please choose another one.';
-
-            } else if (data.status == 201) {
-                s.innerHTML = 'Appointment scheduled successfully';
-                
-                setTimeout(() => {
-                    s.innerHTML = "";
-                    p.innerHTML = "";
-                    location.reload();
-                }, 3000);
-                document.getElementById('appRegister').reset();
-            }
-        })
-        .catch(error => { 
-            console.error('Error', error);
         });
+
+        const data = await response.json();
+
+        if (response.status === 409) {
+            p.innerHTML = 'This hour is already taken, please choose another one.';
+
+        } else if (response.status === 201) {
+            appModal.style.display = 'none';
+            document.getElementById('appRegister').reset();
+
+            setTimeout(() => {
+                location.reload();
+            }, 300);
+
+        } else {
+            p.innerHTML = data.message || 'Error scheduling appointment.';
+        }
+
     } catch (error) {
-        console.log(error)  
+        console.error('Error registering appointment:', error);
+        p.innerHTML = 'There was an error processing your request.';
     }
 });
-    
-document.addEventListener("DOMContentLoaded", async () => {
 
+
+document.addEventListener("DOMContentLoaded", async () => {
     const userId = localStorage.getItem('ownerID');
 
     try {
-        await fetch(`/app/apps?ownerId=${userId}`, {
-          method: 'GET', 
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
-          }
-        }).then(async app => {
-            const apps = await app.json();
+        const response = await fetch(`/app/apps?ownerId=${userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            }
+        });
 
-            const appsTableBody = document.querySelector('#tableApp tbody');
-            appsTableBody.innerHTML = ''; 
-        
-            await apps.forEach(async apps2 => {
+        if (!response.ok) {
+            throw new Error('Error getting appointments');
+        }
 
-              console.log(await apps2)
-              const appRow = document.createElement('tr');
-              
-              const vetNameCell = document.createElement('td');
-              vetNameCell.textContent = await apps2.vetName;
-        
-              const petNameCell = document.createElement('td');
-              petNameCell.textContent = await apps2.petName;
+        const apps = await response.json();
 
-              const appDateCell = document.createElement('td');
-              appDateCell.textContent = await apps2.datetime;   
-        
-              const appActionCell = document.createElement("td");
-              appActionCell.className = "text-end"; 
+        const appsTableBody = document.querySelector('#tableApp tbody');
+        appsTableBody.innerHTML = '';
 
-              const editButton = document.createElement("button");
-              editButton.className = "btnUpdate btn btn-update btn-sm me-2"; 
-              editButton.innerHTML = '<i class="bi bi-pencil"></i>'; 
-              editButton.setAttribute('data-id', apps2._id);
+        apps.forEach(app => {
+            const appRow = document.createElement('tr');
 
-                
-              const deleteButton = document.createElement("button");
-              deleteButton.className = "btnDelete btn btn-danger btn-sm me-2"; 
-              deleteButton.innerHTML = '<i class="bi bi-trash"></i>'; 
-              deleteButton.setAttribute('data-id', apps2._id);
-               
-              appActionCell.appendChild(editButton);
-              appActionCell.appendChild(deleteButton);  
+            const vetNameCell = document.createElement('td');
+            vetNameCell.textContent = app.vetName;
 
-              appRow.appendChild(vetNameCell);
-              appRow.appendChild(petNameCell);
-              appRow.appendChild(appDateCell);
-              appRow.appendChild(appActionCell);
-        
-              appsTableBody.appendChild(appRow);
-            });
-        }).catch(error => {
-            console.log(error)
-        })
-        
+            const petNameCell = document.createElement('td');
+            petNameCell.textContent = app.petName;
+
+            // Mostrar la fecha y hora convertidas a la zona horaria de Colombia.
+            const appDateCell = document.createElement('td');
+            appDateCell.textContent = formatDateTimeColombia(app.datetime);
+
+            const appActionCell = document.createElement('td');
+            appActionCell.className = 'text-end';
+
+            const editButton = document.createElement('button');
+            editButton.className = 'btnUpdate btn btn-update btn-sm me-2';
+            editButton.innerHTML = '<i class="bi bi-pencil"></i>';
+            editButton.setAttribute('data-id', app._id);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'btnDelete btn btn-danger btn-sm me-2';
+            deleteButton.innerHTML = '<i class="bi bi-trash"></i>';
+            deleteButton.setAttribute('data-id', app._id);
+
+            appActionCell.appendChild(editButton);
+            appActionCell.appendChild(deleteButton);
+
+            appRow.appendChild(vetNameCell);
+            appRow.appendChild(petNameCell);
+            appRow.appendChild(appDateCell);
+            appRow.appendChild(appActionCell);
+
+            appsTableBody.appendChild(appRow);
+        });
+
     } catch (error) {
-    console.error('Error:', error);
-    alert('There was an error getting the appointments');
+        console.error('Error getting appointments:', error);
+        alert('There was an error getting the appointments');
     }
 });
 
-document.querySelector('#tableApp').addEventListener('click', async function (event) {
+
+document.querySelector('#tableApp').addEventListener('click', async function(event) {
     if (event.target.closest('.btnUpdate')) {
         const editButton = event.target.closest('.btnUpdate');
         const appId = editButton.getAttribute('data-id');
-        console.log(appId);
+
         try {
             const response = await fetch(`/app/getApp/${appId}`, {
                 method: 'GET',
@@ -321,89 +353,112 @@ document.querySelector('#tableApp').addEventListener('click', async function (ev
             });
 
             const appData = await response.json();
+
             if (response.ok) {
                 document.querySelector('#idUpdate').value = appData._id;
+
                 const selectVetsUp = document.querySelector('#selectVetsUpdate');
                 selectVetsUp.value = appData.vetID;
-                const selectedOptionVet = Array.from(selectVetsUp.options).find(option => option.value === appData.vetID);
+
                 document.querySelector('#selectPetsUpdate').value = appData.petName;
-                document.querySelector('#datetimeUpdate').value = appData.datetime;
-                document.querySelector('#appModalUpdate').style.display = 'block';
+
+                document.querySelector('#datetimeUpdate').value =
+                    formatDateTimeLocal(appData.datetime);
+
+                appModalUpdate.style.display = 'block';
+
             } else {
                 alert('Error fetching appointment data');
             }
+
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error fetching appointment:', error);
             alert('Error fetching appointment details. Please try again.');
         }
     }
 });
 
-document.querySelector('#appRegisterUpdate').addEventListener('submit', async function (event) {
+
+document.querySelector('#appRegisterUpdate').addEventListener('submit', async function(event) {
     event.preventDefault();
+
     try {
         const appId = document.querySelector('#idUpdate').value;
+
         const selectVetsUp = document.getElementById('selectVetsUpdate');
-        const updatedVetName = selectVetsUp.options[selectVetsUp.selectedIndex].textContent;
+
+        const updatedVetName =
+            selectVetsUp.options[selectVetsUp.selectedIndex].textContent;
+
         const updatedVetID = selectVetsUp.value;
+
         const updatedPetName = document.querySelector('#selectPetsUpdate').value;
         const updatedDate = document.querySelector('#datetimeUpdate').value;
+
         const ownerID = localStorage.getItem('ownerID');
 
-        let warnings  = ""
-        let send = false
-        l.innerHTML = ""
-        u.innerHTML = ""
+        l.innerHTML = '';
+        u.innerHTML = '';
 
-        if (!updatedVetName || !updatedPetName || !updatedDate){
-            warnings+= 'All fields are required <br>';
-            send = true
-        }
-
-        if(send){
-            l.innerHTML = warnings
+        if (!updatedVetID || !updatedPetName || !updatedDate) {
+            l.innerHTML = 'All fields are required';
             return;
         }
 
-        await fetch(`/app/updateApp/${appId}`, {
+
+        const appointmentDate = new Date(updatedDate);
+
+        if (isNaN(appointmentDate.getTime())) {
+            l.innerHTML = 'Please enter a valid date and time.';
+            return;
+        }
+
+        const response = await fetch(`/app/updateApp/${appId}`, {
             method: 'PUT',
             headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        },
-        body: JSON.stringify({
-            vetName: updatedVetName,
-            vetID : updatedVetID,
-            petName: updatedPetName,
-            datetime: updatedDate,
-            ownerID: ownerID
-        })
-        }).then(async data => {
-        console.log(data.status)
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            },
+            body: JSON.stringify({
+                vetName: updatedVetName,
+                vetID: updatedVetID,
+                petName: updatedPetName,
+                datetime: appointmentDate.toISOString(),
+                ownerID: ownerID
+            })
+        });
 
-        if (data.status == 500) {
+        const data = await response.json();
+
+        if (response.status === 409) {
             l.innerHTML = 'This hour is already taken, please choose another one.';
 
-        } else if (data.status == 201) {
-            u.innerHTML = 'Appointment updated successfully';
-            
-            setTimeout(() => {
-                u.innerHTML = "";
-                l.innerHTML = "";
-            }, 3000);
+        } else if (response.status === 200) {
             document.getElementById('appRegisterUpdate').reset();
+
+            appModalUpdate.style.display = 'none';
+
+            setTimeout(() => {
+                location.reload();
+            }, 300);
+
+        } else if (response.status === 404) {
+            l.innerHTML = 'Appointment not found';
+
+        } else {
+            l.innerHTML = data.message || 'Error updating appointment. Please try again.';
         }
-        }).catch(error => { 
-            console.error('Error', error);
-        });
+
     } catch (error) {
-        console.log(error)  
+        console.error('Error updating appointment:', error);
+        l.innerHTML = 'There was an error processing your request.';
     }
-});    
+});
 
 
-document.querySelector('#tableApp').addEventListener('click', async function (event) {
-    if (event.target.closest('.btnDelete')) { 
+// ELIMINAR CITA
+document.querySelector('#tableApp').addEventListener('click', async function(event) {
+    if (event.target.closest('.btnDelete')) {
         const deleteButton = event.target.closest('.btnDelete');
         const appId = deleteButton.getAttribute('data-id');
 
@@ -414,14 +469,16 @@ document.querySelector('#tableApp').addEventListener('click', async function (ev
                 });
 
                 const data = await response.json();
+
                 if (!data.error) {
                     alert('Appointment deleted successfully');
                     location.reload();
                 } else {
                     alert(data.error);
                 }
+
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error deleting appointment:', error);
                 alert('Error deleting appointment. Please try again.');
             }
         }

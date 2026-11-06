@@ -51,14 +51,14 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             sessionStorage.setItem('user', JSON.stringify(data));
             
             if (data.Role === 'Admin'){
-                window.location.href = 'http://localhost:3000/HTML/landingAdmin.html'
+                window.location.href = '/HTML/landingAdmin.html'
                 
             } else if (data.Role === 'Vet'){
-                window.location.href = 'http://localhost:3000/HTML/landingVet.html'
+                window.location.href = '/HTML/landingVet.html'
                 localStorage.setItem('vetID', data.ID);
     
             } else if (data.Role === 'Pet owner'){
-                window.location.href = 'http://localhost:3000/HTML/landingOwner.html'
+                window.location.href = '/HTML/landingOwner.html'
                 localStorage.setItem('ownerID', data.ID);
             }
         } else {

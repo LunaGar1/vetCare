@@ -1,26 +1,78 @@
 const express = require('express');
 const router = express.Router();
 
+const {
+    isAuthenticated,
+    authorizeRoles
+} = require('../middleware/auth');
+
 const Controller = require('../controllers/user');
 
-router.post('/register', Controller.register);
 
-router.get('/profile', Controller.renderProfile);
+router.post(
+    '/register',
+    isAuthenticated,
+    authorizeRoles('Admin'),
+    Controller.register
+);
 
-router.get('/showUsers', Controller.showUsers);
+router.get(
+    '/showUsers',
+    isAuthenticated,
+    authorizeRoles('Admin'),
+    Controller.showUsers
+);
 
-router.get('/getUser/:ID', Controller.getUserById);
+router.get(
+    '/getUser/:ID',
+    isAuthenticated,
+    authorizeRoles('Admin'),
+    Controller.getUserById
+);
 
-router.post('/editUser', Controller.editUser);
+router.post(
+    '/editUser',
+    isAuthenticated,
+    authorizeRoles('Admin'),
+    Controller.editUser
+);
 
-router.delete("/deleteUser/:id", Controller.deleteUser);
+router.delete(
+    '/deleteUser/:id',
+    isAuthenticated,
+    authorizeRoles('Admin'),
+    Controller.deleteUser
+);
 
-router.get("/getOneUser", Controller.getOneUser);
+router.get(
+    '/profile',
+    isAuthenticated,
+    Controller.renderProfile
+);
 
-router.post("/updatePassword", Controller.updatePassword);
+router.get(
+    '/getOneUser',
+    isAuthenticated,
+    Controller.getOneUser
+);
 
-router.delete("/deleteOneUser", Controller.deleteOneUser);
+router.post(
+    '/updatePassword',
+    isAuthenticated,
+    Controller.updatePassword
+);
 
-router.get("/getAllVets", Controller.getAllVets);
+router.delete(
+    '/deleteOneUser',
+    isAuthenticated,
+    Controller.deleteOneUser
+);
+
+router.get(
+    '/getAllVets',
+    isAuthenticated,
+    Controller.getAllVets
+);
+
 
 module.exports = router;

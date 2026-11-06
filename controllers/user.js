@@ -1,6 +1,7 @@
 const userModel = require('../models/userModel');
 const bcrypt = require('bcrypt');
 
+
 async function register(req, res){
   try {
     const { names, lastNames, typeID, ID,Role,user, password} = req.body;
@@ -32,7 +33,9 @@ const renderProfile = async (req, res) => {
   }
 
   try {
-      const user = await userModel.findById(req.session.userId);
+      const user = await userModel
+        .findById(req.session.userId)
+        .select('-hashedPassword');
       if (!user) {
           return res.status(404).send('User no found');
       }
@@ -43,41 +46,50 @@ const renderProfile = async (req, res) => {
 };
 
 const getOneUser = async (req, res) => {
-  if (req.session.userId) {
-    userModel.findById(req.session.userId)
-      .then(user => {
-        if (user) {
-          res.json(user); 
-        } else {
-          res.status(404).json({ error: 'User not found' });
+    try {
+        if (!req.session.userId) {
+            return res.status(401).json({
+                error: 'User not authenticated'
+            });
         }
-      })
-      .catch(err => {
-        res.status(500).json({ error: 'Error fetching user' });
-      });
-  } else {
-    res.status(401).json({ error: 'User not authenticated' });
-  }
+
+        const user = await userModel
+            .findById(req.session.userId)
+            .select('-hashedPassword');
+
+        if (!user) {
+            return res.status(404).json({
+                error: 'User not found'
+            });
+        }
+
+        return res.status(200).json(user);
+
+    } catch (error) {
+        console.error('Error fetching user:', error.message);
+
+        return res.status(500).json({
+            error: 'Error fetching user'
+        });
+    }
 };
 
 const getAllVets = async (req, res) => {
+    try {
+        const vets = await userModel
+            .find({ Role: 'Vet' })
+            .select('names lastNames ID Role');
 
-  // if (req.session.userId) {
-    userModel.find({ "Role": "Vet" }).then(vets => {
-      if (vets) {
-        res.send(vets); 
-      } else {
-        res.status(404).json({ error: 'Vets not found' });
-      }
-    })
-    .catch(err => {
-      res.status(500).json({ error: 'Error fetching Vets' });
-    });
-  // } else {
-  //   res.status(401).json({ error: 'User not authenticated' });
-  // }
+        return res.status(200).json(vets);
+
+    } catch (error) {
+        console.error('Error fetching vets:', error.message);
+
+        return res.status(500).json({
+            error: 'Error fetching vets'
+        });
+    }
 };
-
 
 const updatePassword = async (req, res) => {
   const { newPassword } = req.body;
@@ -151,8 +163,9 @@ const deleteOneUser = async (req, res) => {
 
 const showUsers = async (req, res) => {
   try {
-      const users = await userModel.find({});
-      console.log(users);
+      const users = await userModel
+        .find({})
+        .select('-hashedPassword');
       return res.render('showUsers', {users: users})
   } catch (error) {
       return res.status(500).send('Error showing users');
@@ -162,7 +175,9 @@ const showUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
       const userId = req.params.ID;
-      const user = await userModel.findOne({ID: userId});
+      const user = await userModel
+        .findOne({ ID: userId })
+        .select('-hashedPassword');
 
       if (!user) {
           return res.status(404).json({ message: 'User not found' });
@@ -184,7 +199,6 @@ const editUser = async (req, res) => {
 
     console.log('Base de datos:', userModel.db.name);
     console.log('ID recibido:', IDupdate);
-    console.log('Datos recibidos:', req.body);
 
     if (!user) {
       return res.status(404).json({
@@ -211,8 +225,8 @@ const editUser = async (req, res) => {
           names: namesUpdate,
           lastNames: lastNamesUpdate,
           typeID: typeIDupdate,
-          role: RoleUpdate,
-          username: userUpdate,
+          Role: RoleUpdate,
+          user: userUpdate,
           hashedPassword: hashedPassword
         },
         { new: true }
