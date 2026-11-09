@@ -1,107 +1,118 @@
 # VetCare
-We create VetCare from an university asignation where we created a website for the management of the processes of a vet clinic. The web has many roles and of course different access for all of them.
 
-## Índice
-1. [Introduction](#Introduction)
-2. [Parameters](#Parameters)
-3. [Pre-Installation Steps](#Pre-Installation-steps)
-4. [Installation Steps](#Instalation-steps)
-5. [Process](#Process)
-   - [Built with](#Building)
-6. [Authors](#Autors)
+**VetCare** is a web application designed to support the management of veterinary clinic processes. It allows users to manage information about users, pets, appointments, and medicines through a role-based access system.
 
-## Introduction
-VetCare was created by Luna Penagos Garcia and Sara Murillo, it started from an university asignment and it helps improve the processes of the vet clinic, you can enter as Admin, Vet or Pet Owner and based on your rol you'll have a different Landing with different buttons ans functions.
+## Live Demo
 
-## Parameters
-- Rol management
-- User profile
-- Pet management
-- Appoiment module
-- Profile management
-- Medicines and prescriptions module
-- Payment module
-- Data base
-- Graphic User Interface
+You can access the deployed application through the following link:
 
-## Pre-Installation Steps
-As a pre-parameter you'll have to install some programs such as:
-   - MongoDB compass
-   - Visual Studio Code (Specifically)
-     - HTML
-     - CSS
-     - JavaScript
-   - NodeJS
+**[Visit VetCare](https://vetcare-vxl2.onrender.com/)**
 
-## Instalation Steps
-1. Open a terminal on Visual Studio
-2. Use the command "git init"
-3. Use the command "git remote add origin https://github.com/LunaGar1/vetCare.git"
-4. Use the command "git clone https://github.com/LunaGar1/vetCare.git"
-5. Use the command "cd vetCare"
-6. Use the command "code ."
-7. Use the command on the project terminal: "npm install bcrypt body-parser cors ejs express express-session mongodb mongoose multer"
-8. Use the command: "node index.js"
-9. Open MongoDB Compass and click on Connect button
-10. You should be looking at the database "vetCare"
-11.  Click on "users" collection
-12. Click on "ADD DATA" button
-13. Click on "Insert Document"
-14. Enter the following:
-```
-    [{
-  "_id": {
-    "$oid": "672d6f0057271f85872fe35e"
-  },
-  "names": "luna",
-  "lastNames": "garcia m",
-  "typeID": "ID",
-  "ID": "12345678",
-  "Role": "Admin",
-  "user": "l@gmail.com",
-  "hashedPassword": "$2b$10$oypTYqJUyNMjR.V4bCXUbuoOqJ8/v0yzsPkTZA8iGMMnyl9faIisG",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "672d6f2f57271f85872fe362"
-  },
-  "names": "Sara",
-  "lastNames": "Murillo",
-  "typeID": "ID",
-  "ID": "09876543",
-  "Role": "Vet",
-  "user": "s@gmail.com",
-  "hashedPassword": "$2b$10$fyV5yJzHPBNOK5RegRLEDOYJJ5T2BgWH5l8Q69x1cxN3BP12ENVia",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "672d6f5657271f85872fe366"
-  },
-  "names": "Manuel",
-  "lastNames": "Garcia",
-  "typeID": "ID",
-  "ID": "162695327",
-  "Role": "Pet owner",
-  "user": "m@gmail.com",
-  "hashedPassword": "$2b$10$SvrQpou/.fY04knPOvOJb.hUHZmSHflDX5xJVRMZl89mGHDx9..3i",
-  "__v": 0
-}]
+## Demo Accounts
+
+The application provides three predefined accounts so you can explore its features. Choose an account according to the role you want to test:
+
+| Role | Email | Password |
+|---|---|---|
+| Administrator | `admin@gmail.com` | `Admin1234567` |
+| Veterinarian | `vet@gmail.com` | `Vet123456789` |
+| Pet Owner | `owner@gmail.com` | `Owner1234567` |
+
+**Important:** These credentials are intended exclusively for testing and demonstration purposes. Do not use personal information or passwords that you use for other services.
+
+All demo accounts share the same testing environment, so changes made to records may be visible to other users who access the application.
+
+## User Roles
+
+VetCare implements a role-based access control system:
+
+- **Administrator (Admin):** Manages user accounts and has access to administrative features.
+- **Veterinarian (Vet):** Accesses features related to veterinary care and clinic management.
+- **Pet Owner:** Accesses features related to their pets and appointments.
+
+## Main Features
+
+- User login and authentication.
+- Role-based access control.
+- User management.
+- Pet registration and management.
+- Veterinary appointment management.
+- Medicine management and consultation.
+- User and pet information updates.
+
+## Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| Node.js | JavaScript runtime environment |
+| Express.js | Server-side development and routing |
+| MongoDB Atlas | Cloud database |
+| Mongoose | Data modeling and MongoDB integration |
+| JavaScript | Client-side and server-side logic |
+| HTML5 | Web page structure |
+| CSS3 | Styling and layout |
+| Bootstrap | Responsive design and UI components |
+| EJS | Server-side view rendering |
+| bcrypt | Password hashing |
+| Express-session | Session management |
+
+## Local Installation
+
+To run the project locally, follow these steps:
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/LunaGar1/vetCare.git
 ```
 
+**2. Navigate to the project directory**
 
-And enter on "Insert" button
+```bash
+cd vetCare
+```
 
-14. Go to visual again and use the command on the terminal: "node index.js"
-15. Open the browser and search the browser and look for the addres "http://localhost:3000/HTML/login.html"
-16. You can login with any of the users you saved in the "users" collection of MongoDB, everyone has a diferent role
+**3. Install dependencies**
 
-## Process
-Our website was created in about 2 months, we use git as our version control software. We work separately and in different branches dividing our work equally. Overall, it was a great process, we learned a lot.
+```bash
+npm install
+```
 
-### Built with
-We built the web using HTML, CSS and JS. We used Visual as our workspace and git to control changes of the web
+**4. Configure environment variables**
+
+Create a `.env` file in the project's root directory and add the following variables:
+
+```env
+MONGODB_URI=your_mongodb_connection_string
+SESSION_SECRET=your_session_secret
+NODE_ENV=development
+```
+
+Replace the example values with your own configuration. Do not share your `.env` file or upload it to the repository.
+
+**5. Start the application**
+
+```bash
+npm start
+```
+
+The application will be available locally at:
+
+```text
+http://localhost:3000
+```
+
+## Deployment
+
+The application is deployed on **Render** and uses **MongoDB Atlas** as its cloud database service.
+
+Access the live version here:
+
+[https://vetcare-vxl2.onrender.com/](https://vetcare-vxl2.onrender.com/)
 
 ## Authors
-Luna Penagos Garcia and Sara Murillo
+
+- Luna Penagos Garcia
+- Sara Murillo
+
+Academic project developed as part of the Computer Engineering program.
