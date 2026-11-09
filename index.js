@@ -1,15 +1,11 @@
 require('dotenv').config();
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const connectDB = require('./db');
 const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo').MongoStore;
 
-console.log('MongoStore:', MongoStore);
-console.log('Tipo de MongoStore:', typeof MongoStore);
-console.log('Tipo de create:', typeof MongoStore.create);
 
 const app = express();
 
@@ -31,8 +27,8 @@ if (process.env.NODE_ENV === 'production') {
 connectDB();
 
 // Middlewares generales
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static('public'));
 
 // Configuración de sesiones
